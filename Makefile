@@ -8,12 +8,13 @@ INCS		=	includes
 
 LIBFTDIR	=	libft
 
-LIBMLX		= 	mlx42
+LIBMLX		= 	MLX42
 
 # -=-=-=-=-    FILES -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
-SRC			=	srcs/main.c			\
-				srcs/fdf.c
+SRC			=	srcs/fdf.c				\
+				srcs/parser.c			\
+				srcs/error.c
 
 HEADER		=	$(INCLUDES)/fdf.h
 
@@ -27,7 +28,7 @@ LIBS		=	$(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a
 
 CC			=	-cc
 
-CFLAGS		=	-Werror -Wextra -Wall -g -ldl -lglfw -pthread -lm #-fsanitize=address
+CFLAGS		=	-Werror -Wextra -Wall -g# -ldl -lglfw -pthread -lm
 
 INCLUDE		=	-Iincludes
 

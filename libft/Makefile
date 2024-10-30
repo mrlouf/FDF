@@ -30,25 +30,25 @@ SRCS		=	ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c 	\
 			ft_printf.c ft_printf_conv.c ft_printf_utils.c ft_lstnew.c 		\
 			ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c 	\
 			ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c			\
-			get_next_line.c get_next_line_utils.c
+			get_next_line.c
 			
 OBJS		:=	$(SRCS:%.c=%.o)
 
-HEADERS		=	libft.h ft_printf.h get_next_line.h
+HEADER		=	libft.h ft_printf.h
 
 MAKE		=	Makefile
 			
 # -=-=-=-=-    NAME -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
 
-CC			= 	cc
-CFLAGS		= 	-Wall -Wextra -Werror
-INCLUDES	= 	-I./
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror -g
+INCLUDES	= -I./
 
 # -=-=-=-=-    TARGETS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(HEADERS) $(SRCS) $(MAKE)
+$(NAME): $(OBJS) $(HEADER) $(SRCS) $(MAKE)
 	ar rcs $(NAME) $(OBJS)
 	
 %.o: %.c $(HEADER) $(MAKE)

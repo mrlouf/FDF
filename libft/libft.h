@@ -13,6 +13,10 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -92,5 +96,12 @@ int			ft_putnbr(int nbr);
 int			ft_putunsigned(unsigned int nbr);
 int			ft_putptr(unsigned long ptr, int i);
 int			ft_puthexa(unsigned int nbr, char x);
+
+// GET NEXT LINE
+
+char		*get_next_line(int fd);
+char		*ft_free(char **stash);
+char		*ft_fill_line(char *stash);
+char		*ft_read_buffer(int fd, char *stash, char *buffer);
 
 #endif
