@@ -4,7 +4,7 @@ NAME		= 	fdf
 
 # -=-=-=-=-    PATH -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
 
-INCLUDES	=	includes
+INCS		=	includes
 
 LIBFTDIR	=	libft
 
@@ -12,21 +12,24 @@ LIBMLX		= 	mlx42
 
 # -=-=-=-=-    FILES -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
-SRC			=	
+SRC			=	srcs/main.c			\
+				srcs/fdf.c
 
 HEADER		=	$(INCLUDES)/fdf.h
 
 MAKE		=	Makefile
 
-OBJS		=	$(SRC:.c=.o)
+OBJS		=	$(SRC:%.c=%.o)
 
-LIBS		=	$(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a
+LIBS		=	$(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a 
 
 # -=-=-=-=-    FLAGS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
 
 CC			=	-cc
-CFLAGS		=	-Werror -Wextra -Wall -g# -fsanitize=address
-INCLUDE		=	-I/
+
+CFLAGS		=	-Werror -Wextra -Wall -g -ldl -lglfw -pthread -lm #-fsanitize=address
+
+INCLUDE		=	-Iincludes
 
 # -=-=-=-=-    TARGETS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
@@ -35,14 +38,14 @@ all: make_libft libmlx $(NAME)
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
+%.o: %.c $(HEADER) Makefile
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBS) -c $< -o $@
+
 $(NAME): $(OBJS) $(SRCS)
-	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE)$(HEADER) libft/libft.a -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) $(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a -o $(NAME)
 
 make_libft:
 	make -C libft
-
-%.o: %.c $(HEADER) Makefile
-	$(CC) $(CFLAGS) $(INCLUDE)$(HEADER) -c $< -o $@
 
 clean:
 	/bin/rm -f $(OBJS)

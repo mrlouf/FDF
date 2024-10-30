@@ -20,8 +20,8 @@
 #include <stdbool.h>
 #include "../mlx42/include/MLX42/MLX42.h"
 
-#define WIDTH 512
-#define HEIGHT 512
+#define WIDTH 1080
+#define HEIGHT 720
 
 static mlx_image_t* image;
 
