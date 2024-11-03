@@ -14,7 +14,10 @@ LIBMLX		= 	MLX42
 
 SRC			=	srcs/fdf.c				\
 				srcs/parser.c			\
-				srcs/error.c
+				srcs/error.c			\
+				srcs/matrix.c			\
+				srcs/start.c			\
+				srcs/matrix_utils.c
 
 HEADER		=	$(INCLUDES)/fdf.h
 
@@ -22,13 +25,13 @@ MAKE		=	Makefile
 
 OBJS		=	$(SRC:%.c=%.o)
 
-LIBS		=	$(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a 
+LIBS		=	$(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a /usr/lib/x86_64-linux-gnu/libglfw.so
 
 # -=-=-=-=-    FLAGS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
 
 CC			=	-cc
 
-CFLAGS		=	-Werror -Wextra -Wall -g# -ldl -lglfw -pthread -lm
+CFLAGS		=	-Werror -Wextra -Wall -g -ldl -lglfw -pthread -lm -fsanitize=address
 
 INCLUDE		=	-Iincludes
 
@@ -43,7 +46,7 @@ libmlx:
 	$(CC) $(CFLAGS) $(INCLUDE) $(LIBS) -c $< -o $@
 
 $(NAME): $(OBJS) $(SRCS)
-	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) $(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) $(LIBS) -o $(NAME)
 
 make_libft:
 	make -C libft

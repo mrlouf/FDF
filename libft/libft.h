@@ -54,6 +54,7 @@ void		*ft_memchr(const void *s, int c, size_t len);
 int			ft_memcmp(const void *b1, const void *b2, size_t len);
 char		*ft_strnstr(const char *big, const char *little, size_t len);
 long long	ft_atoi(const char *str);
+int			ft_atoi_base(const char *str, int base);
 
 // USING MALLOC
 
@@ -63,7 +64,7 @@ char		*ft_strdup(char *str);
 // ADDITIONAL FUNCTIONS
 
 char		*ft_substr(char const *s, unsigned int start, size_t len);
-char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strjoin(char *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 char		**ft_split(char const *s, char c);
 char		*ft_itoa(int n);

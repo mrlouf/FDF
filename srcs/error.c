@@ -13,15 +13,32 @@
 #include "../includes/fdf.h"
 #include "../libft/libft.h"
 
-void	free_map(char **map)
+void	free_array(char **array)
 {
 	int	i;
+	
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
+	array = NULL;
+}
 
-	i = 0;
-	while (map[i])
-		free(map[i++]);
-	free(map);
-	map = NULL;
+void	free_matrix(t_point **matrix)
+{
+	t_point	*tmp;
+
+	if (matrix == NULL)
+		return ;
+	while ((*matrix)->next)
+	{
+		tmp = (*matrix)->next;
+		free(*matrix);
+		(*matrix) = tmp;
+	}
+	free(*matrix);
+	free(matrix);
+	matrix = NULL;
 }
 
 void	print_error(int err)
@@ -30,4 +47,3 @@ void	print_error(int err)
 	perror("Error");
 	exit(EXIT_FAILURE);
 }
-

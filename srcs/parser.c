@@ -42,9 +42,8 @@ int	check_extension(char *file)
 	return (0);
 }
 
-/*	This function allocates an array of strings to put each line from
-	the .fdf file. Each line gets read from GNL and is trimmed from
-	the \n at the end.		*/
+/*	This function allocates an array of strings to put each line read by GNL
+	from the .fdf file.		*/
 
 char	**get_content(int fd)
 {
@@ -53,52 +52,37 @@ char	**get_content(int fd)
 	char	**content;
 
 	i = 0;
-	content = (char **)malloc(sizeof(char*) * (COL_MAX + 1));
+	content = (char **)malloc(sizeof(char *) * (1000 + 1));
 	if (!content)
 		print_error(ENOMEM);
-	content[COL_MAX] = "\0";
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		//line = ft_strtrim(line, "\n");
 		content[i++] = ft_strdup(line);
 		free(line);
 	}
 	if (content[0] == NULL)
+	{
+		free_array(content);
 		print_error(EBADF);
+	}
+	content[i] = '\0';
 	return (content);
 }
 
-char	**check_content(char *file)
+char	**check_input(char *file)
 {
-	int		fd;
 	char	**map;
+	int		fd;
 
+	if (!check_extension(file))
+		print_error(EINVAL);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		print_error(EBADF);
 	map = get_content(fd);
 	close(fd);
 	return (map);
-}
-
-void	check_input(char *file)
-{
-	char	**map;
-	int		i;
-
-	/*	TODO
-		- open and read with GNL: check for digits and hexas only,
-		minimum of 2 col, 2 rows?
-	*/
-
-	if (!check_extension(file))
-		print_error(EINVAL);
-	map = check_content(file);
-	i = 0;
-	while (map[i] != NULL)
-		ft_printf("%s\n", map[i++]);
-	free_map(map);
 }

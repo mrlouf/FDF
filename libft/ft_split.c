@@ -77,7 +77,7 @@ char	**ft_split(char const *s, char c)
 	strs = get_strs(strs, s, c);
 	return (strs);
 }
-
+/*
 int	main(int ac, char **av)
 {
 	char	**res;
@@ -96,4 +96,4 @@ int	main(int ac, char **av)
 		free(res);
 	}
 	return (0);
-}
+}*/
