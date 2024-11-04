@@ -32,10 +32,10 @@ t_point	*matrix_last(t_point *matrix)
 {
 	t_point	*last;
 	
-	if (!matrix)
+	if (matrix == NULL)
 		return (NULL);
 	last = matrix;
-	while (last->next != NULL)
+	while (last->next)
 		last = last->next;
 	return (last);
 }
@@ -46,7 +46,7 @@ void	point_addback(t_point **matrix, t_point *new)
 
 	if (!new)
 		return ;
-	if (!*matrix)
+	if (*matrix == NULL)
 		*matrix = new;
 	else
 	{
@@ -60,7 +60,7 @@ void	print_matrix(t_point **matrix)
 	t_point *tmp;
 	
 	tmp = *matrix;
-	while (tmp->next)
+	while (tmp->next != NULL)
 	{
 		ft_printf("x = %d, y = %d, z = %d, colour = %d\n", tmp->x, tmp->y, tmp->z, tmp->colour);
 		tmp = tmp->next;

@@ -26,7 +26,7 @@ int	count_points(char **map)
 	while (map[0][i])
 	{
 		if (ft_isalnum(map[0][i])
-		&& (map[0][i + 1] == ' ' || map[0][i + 1] == '\n'))
+		&& (map[0][i + 1] == ' ' || map[0][i + 1] == '\n' || map[0][i + 1] == '\0'))
 			nb++;
 		i++;
 	}
@@ -42,7 +42,7 @@ void	get_alt_and_colour(t_point *point, char *str)
 {
 	point->z = ft_atoi(str);
 	point->colour = ft_atoi_base((ft_strchr(str, ',') + 3), 16);
-	printf("alt = %d, colour = %d\n", point->z, point->colour);
+	//printf("alt = %d, colour = %d\n", point->z, point->colour);
 }
 
 t_point	**set_matrix(t_point **matrix, char **map)
@@ -51,15 +51,17 @@ t_point	**set_matrix(t_point **matrix, char **map)
 	int	j;
 	char	**line_tab;
 	t_point *new;
+	int	nb_points = 0;
 
 	i = -1;
-	while (map[++i])
+	while (map[++i] != NULL)
 	{
 		line_tab = ft_split(map[i], ' ');
-		ft_printf("map = %s\n", line_tab[i]);
+		//ft_printf("map = %s\n", line_tab[i]);
 		j = -1;
-		while (line_tab[++j])
+		while (line_tab[++j] != NULL)
 		{
+			//ft_printf("map = %s\n", line_tab[j]);
 			new = new_point(i, j, 0, 0);
 			if (!new)
 				print_error(ENOMEM);
@@ -68,9 +70,11 @@ t_point	**set_matrix(t_point **matrix, char **map)
 			else
 				new->z = ft_atoi(line_tab[j]);
 			point_addback(matrix, new);
+			nb_points++;
 		}
 		free_array(line_tab);
 	}
+	ft_printf("nb points = %d\n", nb_points);
 	return (matrix);
 }
 
@@ -89,7 +93,7 @@ t_point	**get_matrix(char **map)
 	matrix[0] = NULL;
 	matrix[nb_pts] = NULL;
 	matrix = set_matrix(matrix, map);
-	print_matrix(matrix);
+	//print_matrix(matrix);
 	//init_window();
 	return (matrix);
 }

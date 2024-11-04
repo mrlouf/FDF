@@ -36,8 +36,9 @@ typedef struct s_point
 
 char	**check_input(char *file);
 char	**check_content(char *file);
-char	**get_content(int fd);
+char	**get_content(int fd, int count);
 int		check_extension(char *file);
+int		count_lines(int fd);
 
 //		GET MATRIX
 

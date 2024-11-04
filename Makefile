@@ -31,7 +31,7 @@ LIBS		=	$(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a /usr/lib/x86_64-linux-gnu
 
 CC			=	-cc
 
-CFLAGS		=	-Werror -Wextra -Wall -g -ldl -lglfw -pthread -lm -fsanitize=address
+CFLAGS		=	-Werror -Wextra -Wall -g# -fsanitize=address -ldl -lglfw -pthread -lm
 
 INCLUDE		=	-Iincludes
 
@@ -57,6 +57,7 @@ clean:
 fclean: clean
 	/bin/rm -f $(NAME)
 	make fclean -C libft
+	rm -fr MLX42/build
 
 re: fclean all
 

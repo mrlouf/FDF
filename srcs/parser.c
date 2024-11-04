@@ -45,16 +45,18 @@ int	check_extension(char *file)
 /*	This function allocates an array of strings to put each line read by GNL
 	from the .fdf file.		*/
 
-char	**get_content(int fd)
+char	**get_content(int fd, int count)
 {
 	int		i;
 	char	*line;
 	char	**content;
 
+	printf("count = %d\n", count);
 	i = 0;
-	content = (char **)malloc(sizeof(char *) * (1000 + 1));
+	content = (char **)malloc(sizeof(char *) * (count + 1));
 	if (!content)
 		print_error(ENOMEM);
+	content[count] = NULL;
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -68,21 +70,44 @@ char	**get_content(int fd)
 		free_array(content);
 		print_error(EBADF);
 	}
-	content[i] = '\0';
+	//content[count] = '\0';
 	return (content);
+}
+
+int	count_lines(int fd)
+{
+	int		count;
+	char	*line;
+	
+	count = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
+		count++;
+		free(line);
+	}
+	return (count);
 }
 
 char	**check_input(char *file)
 {
 	char	**map;
 	int		fd;
+	int		count;
 
 	if (!check_extension(file))
 		print_error(EINVAL);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		print_error(EBADF);
-	map = get_content(fd);
+	count = count_lines(fd);
+	close(fd);
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		print_error(EBADF);
+	map = get_content(fd, count);
 	close(fd);
 	return (map);
 }
