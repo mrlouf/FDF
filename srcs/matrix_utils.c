@@ -15,8 +15,8 @@
 
 t_point	*new_point(int x, int y, int z, int colour)
 {
-	t_point*	new;
-	
+	t_point	*new;
+
 	new = malloc(sizeof(t_point));
 	if (!new)
 		return (NULL);
@@ -31,7 +31,7 @@ t_point	*new_point(int x, int y, int z, int colour)
 t_point	*matrix_last(t_point *matrix)
 {
 	t_point	*last;
-	
+
 	if (matrix == NULL)
 		return (NULL);
 	last = matrix;
@@ -57,13 +57,15 @@ void	point_addback(t_point **matrix, t_point *new)
 
 void	print_matrix(t_point **matrix)
 {
-	t_point *tmp;
-	
+	t_point	*tmp;
+
 	tmp = *matrix;
 	while (tmp->next != NULL)
 	{
-		ft_printf("x = %d, y = %d, z = %d, colour = %d\n", tmp->x, tmp->y, tmp->z, tmp->colour);
+		ft_printf("x = %d, y = %d, z = %d, colour = %d\n", \
+		tmp->x, tmp->y, tmp->z, tmp->colour);
 		tmp = tmp->next;
 	}
-	ft_printf("x = %d, y = %d, z = %d, colour = %d\n", tmp->x, tmp->y, tmp->z, tmp->colour);
+	ft_printf("x = %d, y = %d, z = %d, colour = %d\n", \
+	tmp->x, tmp->y, tmp->z, tmp->colour);
 }

@@ -22,22 +22,15 @@ int	main(int ac, char **av)
 {
 	char	**map;
 	t_point	**matrix;
-	
+
 	if (ac == 2)
 	{
 		map = check_input(av[1]);
 		matrix = get_matrix(map);
-		int i = 0;
-		while (map[i] != NULL)
-		{
-			printf("i = %d, map = %s\n", i, map[i]);
-			i++;
-		}
 		free_array(map);
 		free_matrix(matrix);
-		exit(EXIT_SUCCESS);
 	}
 	else
 		print_error(EINVAL);
-	return (0);
+	return (EXIT_SUCCESS);
 }

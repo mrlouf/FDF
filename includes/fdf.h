@@ -13,6 +13,9 @@
 #ifndef FDF_H
 # define FDF_H
 
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
+
 # include <stdio.h>
 # include <errno.h>
 # include <string.h>
@@ -32,6 +35,15 @@ typedef struct s_point
 	struct s_point	*next;
 }	t_point;
 
+typedef struct s_map
+{
+	int	rows;
+	int	cols;
+	int	high;
+	int	low;
+	int	interval;
+}	t_map;
+
 //		CHECK AND PARSE INPUT
 
 char	**check_input(char *file);
@@ -50,8 +62,8 @@ void	print_matrix(t_point **matrix);
 
 //		WINDOW AND DRAWING
 
-int	init_window(void);
-void ft_hook(void* param);
+int		init_window(t_point **matrix);
+void	ft_hook(void* param);
 
 //		ERROR AND FREE
 

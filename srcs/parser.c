@@ -51,7 +51,6 @@ char	**get_content(int fd, int count)
 	char	*line;
 	char	**content;
 
-	printf("count = %d\n", count);
 	i = 0;
 	content = (char **)malloc(sizeof(char *) * (count + 1));
 	if (!content)
@@ -70,7 +69,6 @@ char	**get_content(int fd, int count)
 		free_array(content);
 		print_error(EBADF);
 	}
-	//content[count] = '\0';
 	return (content);
 }
 
@@ -78,7 +76,7 @@ int	count_lines(int fd)
 {
 	int		count;
 	char	*line;
-	
+
 	count = 0;
 	while (1)
 	{
