@@ -24,22 +24,16 @@ void	free_array(void **array)
 	array = NULL;
 }
 
-/*void	free_matrix(t_point **matrix)
+void	free_matrix(t_map *env)
 {
-	t_point	*tmp;
+	int	i;
 
-	if (matrix == NULL)
-		return ;
-	while ((*matrix)->next)
-	{
-		tmp = (*matrix)->next;
-		free(*matrix);
-		(*matrix) = tmp;
-	}
-	free(*matrix);
-	free(matrix);
-	matrix = NULL;
-}*/
+	i = -1;
+	while (++i < env->rows)
+		free(env->grid3d[i]);
+	free(env->grid3d);
+	env->grid3d = NULL;
+}
 
 void	print_error(int err)
 {

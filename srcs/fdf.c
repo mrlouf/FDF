@@ -19,7 +19,7 @@ void	init_env(t_map *env)
 	env->cols = 0;
 	env->max = 0;
 	env->min = 0;
-	env->interval = 30;	// TODO find a calculation for interval depending on map size (interval * rows?)
+	env->interval = 30;
 }
 
 int	main(int ac, char **av)
@@ -31,7 +31,8 @@ int	main(int ac, char **av)
 		init_env(&env);
 		check_input(av[1], &env);
 		set_matrix(&env);
-		//free_matrix(env.grid3d);
+		free_array((void **)env.grid2d);
+		free_matrix(&env);
 	}
 	else
 		print_error(EINVAL);

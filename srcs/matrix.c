@@ -13,8 +13,6 @@
 #include "../includes/fdf.h"
 #include "../libft/libft.h"
 
-/*	Get the total number of points, including ones with colours	*/
-
 void	count_columns(t_map *env)
 {
 	int	nb;
@@ -34,34 +32,27 @@ void	count_columns(t_map *env)
 	env->cols = nb;
 }
 
-void	get_alt_and_colour(char *str, t_point *point)
-{
-	point->z = ft_atoi(str);
-	point->colour = ft_atoi_base((ft_strchr(str, ',') + 3), 16);
-}
-
 void	get_columns(t_map *env, int i)
 {
 	t_point	*point;
 	char	**line_tab;
 	int		j;
-	
+
 	line_tab = ft_split(env->grid2d[i], ' ');
 	j = -1;
 	while (++j < env->cols)
 	{
 		point = &(env->grid3d[i][j]);
-		point->x = j * (env->interval);
-		point->y = i * (env->interval);
+		point->x = j * (env->interval) + (WINDOW_WIDTH / 3);
+		point->y = i * (env->interval) + (WINDOW_HEIGHT / 3);
+		point->colour = 0xFFFFFF;
+		point->z = ft_atoi(line_tab[j]);
 		if (ft_strchr(line_tab[j], ',') != NULL)
-			get_alt_and_colour(line_tab[j], point);
-		else
-			point->z = ft_atoi(line_tab[j]);
+			point->colour = ft_atoi_base((ft_strchr(line_tab[j], ',') + 3), 16);
 		env->max = get_max(env->max, point->z);
 		env->min = get_min(env->min, point->z);
 	}
 	free_array((void **)line_tab);
-
 }
 
 static void	malloc_grid(t_map *env)
@@ -71,7 +62,7 @@ static void	malloc_grid(t_map *env)
 	env->grid3d = malloc(sizeof(t_point *) * env->rows);
 	if (!(env->grid3d))
 	{
-		free_array((void **)env->grid3d);
+		free_matrix(env);
 		print_error(ENOMEM);
 	}
 	i = -1;
@@ -80,7 +71,7 @@ static void	malloc_grid(t_map *env)
 		env->grid3d[i] = malloc(sizeof(t_point) * env->cols);
 		if (!(env->grid3d[i]))
 		{
-			free_array((void **)env->grid3d);
+			free_matrix(env);
 			print_error(ENOMEM);
 		}
 	}
@@ -95,6 +86,5 @@ void	set_matrix(t_map *env)
 	i = -1;
 	while (env->grid2d[++i] != NULL)
 		get_columns(env, i);
-	//print_matrix(env);
 	init_window(env);
 }

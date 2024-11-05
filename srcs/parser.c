@@ -61,12 +61,11 @@ void	get_content(int fd, t_map *env)
 		if (line == NULL)
 			break ;
 		env->grid2d[i++] = ft_strdup(line);
-		//printf("%s\n", env->grid2d[i - 1]);
 		free(line);
 	}
 	if (env->grid2d[0] == NULL)
 	{
-		free_array((void**)env->grid2d);
+		free_array((void **)env->grid2d);
 		print_error(EBADF);
 	}
 }

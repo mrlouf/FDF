@@ -15,18 +15,21 @@
 
 void	print_matrix(t_map *env)
 {
-	int i = -1;
-	
+	int	i;
+	int	j;
+
+	i = -1;
 	while (++i < env->rows)
 	{
-		int j = -1;
+		j = -1;
 		while (++j < env->cols)
-			printf("%d,%d,%d ", env->grid3d[i][j].x, env->grid3d[i][j].y, env->grid3d[i][j].z);
-		printf("\n");
+			ft_printf("%d,%d,%d ", env->grid3d[i][j].x,
+				env->grid3d[i][j].y, env->grid3d[i][j].z);
+		ft_printf("\n");
 	}
 }
 
-int	get_max(int	a, int b)
+int	get_max(int a, int b)
 {
 	if (a > b)
 		return (a);
@@ -34,7 +37,7 @@ int	get_max(int	a, int b)
 		return (b);
 }
 
-int	get_min(int	a, int b)
+int	get_min(int a, int b)
 {
 	if (a < b)
 		return (a);
