@@ -28,47 +28,51 @@
 
 typedef struct s_point
 {
-	int				x;
-	int				y;
-	int				z;
-	int				colour;
-	struct s_point	*next;
+	int	x;
+	int	y;
+	int	z;
+	int	colour;
 }	t_point;
 
 typedef struct s_map
 {
-	int	rows;
-	int	cols;
-	int	high;
-	int	low;
-	int	interval;
+	int		rows;
+	int		cols;
+	int		max;
+	int		min;
+	int		interval;
+	char	**grid2d;
+	t_point	**grid3d;
 }	t_map;
 
 //		CHECK AND PARSE INPUT
 
-char	**check_input(char *file);
-char	**check_content(char *file);
-char	**get_content(int fd, int count);
+void	check_input(char *file, t_map *env);
+void	get_content(int fd, t_map *env);
 int		check_extension(char *file);
-int		count_lines(int fd);
+int		count_rows(int fd);
+int		count_rows(int fd);
 
-//		GET MATRIX
+//		SET MATRIX
 
-t_point	**get_matrix(char **map);
-t_point	*new_point(int x, int y, int z, int colour);
-void	point_addback(t_point **matrix, t_point *new);
-t_point	*matrix_last(t_point *matrix);
-void	print_matrix(t_point **matrix);
+void	init_env(t_map *env);
+void	get_matrix(t_map *env);
+void	set_matrix(t_map *env);
+void	count_columns(t_map *env);
+void	get_columns(t_map *env, int i);
+int		get_max(int	a, int b);
+int		get_min(int	a, int b);
 
 //		WINDOW AND DRAWING
 
-int		init_window(t_point **matrix);
+int		init_window(t_map *env);
 void	ft_hook(void* param);
 
-//		ERROR AND FREE
+//		ERROR, FREE & DEBUG
 
 void	print_error(int err);
-void	free_array(char **array);
+void	free_array(void **array);
 void	free_matrix(t_point **matrix);
+void	print_matrix(t_map *env);
 
 #endif

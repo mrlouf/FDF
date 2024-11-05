@@ -13,7 +13,7 @@
 #include "../includes/fdf.h"
 #include "../libft/libft.h"
 
-void	free_array(char **array)
+void	free_array(void **array)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ void	free_array(char **array)
 	array = NULL;
 }
 
-void	free_matrix(t_point **matrix)
+/*void	free_matrix(t_point **matrix)
 {
 	t_point	*tmp;
 
@@ -39,7 +39,7 @@ void	free_matrix(t_point **matrix)
 	free(*matrix);
 	free(matrix);
 	matrix = NULL;
-}
+}*/
 
 void	print_error(int err)
 {

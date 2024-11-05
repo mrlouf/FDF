@@ -45,34 +45,33 @@ int	check_extension(char *file)
 /*	This function allocates an array of strings to put each line read by GNL
 	from the .fdf file.		*/
 
-char	**get_content(int fd, int count)
+void	get_content(int fd, t_map *env)
 {
 	int		i;
 	char	*line;
-	char	**content;
 
 	i = 0;
-	content = (char **)malloc(sizeof(char *) * (count + 1));
-	if (!content)
+	env->grid2d = (char **)malloc(sizeof(char *) * (env->rows + 1));
+	if (!env->grid2d)
 		print_error(ENOMEM);
-	content[count] = NULL;
+	env->grid2d[env->rows] = NULL;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		content[i++] = ft_strdup(line);
+		env->grid2d[i++] = ft_strdup(line);
+		//printf("%s\n", env->grid2d[i - 1]);
 		free(line);
 	}
-	if (content[0] == NULL)
+	if (env->grid2d[0] == NULL)
 	{
-		free_array(content);
+		free_array((void**)env->grid2d);
 		print_error(EBADF);
 	}
-	return (content);
 }
 
-int	count_lines(int fd)
+int	count_rows(int fd)
 {
 	int		count;
 	char	*line;
@@ -89,23 +88,20 @@ int	count_lines(int fd)
 	return (count);
 }
 
-char	**check_input(char *file)
+void	check_input(char *file, t_map *env)
 {
-	char	**map;
 	int		fd;
-	int		count;
 
 	if (!check_extension(file))
 		print_error(EINVAL);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		print_error(EBADF);
-	count = count_lines(fd);
+	env->rows = count_rows(fd);
 	close(fd);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		print_error(EBADF);
-	map = get_content(fd, count);
+	get_content(fd, env);
 	close(fd);
-	return (map);
 }

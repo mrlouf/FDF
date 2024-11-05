@@ -15,78 +15,86 @@
 
 /*	Get the total number of points, including ones with colours	*/
 
-int	count_points(char **map)
+void	count_columns(t_map *env)
 {
 	int	nb;
 	int	i;
-	int	buf;
 
 	nb = 0;
 	i = 0;
-	while (map[0][i])
+	while (env->grid2d[0][i])
 	{
-		if (ft_isalnum(map[0][i])
-		&& (map[0][i + 1] == ' ' || map[0][i + 1] == '\n'
-		|| map[0][i + 1] == '\0'))
+		if (ft_isalnum(env->grid2d[0][i])
+		&& (env->grid2d[0][i + 1] == ' ' || env->grid2d[0][i + 1] == '\n'
+		|| env->grid2d[0][i + 1] == '\0'))
 			nb++;
 		i++;
 	}
 	i = 1;
-	buf = nb;
-	while (map[i++])
-		nb += buf;
-	return (nb);
+	env->cols = nb;
 }
 
-void	get_alt_and_colour(t_point *point, char *str)
+void	get_alt_and_colour(char *str, t_point *point)
 {
 	point->z = ft_atoi(str);
 	point->colour = ft_atoi_base((ft_strchr(str, ',') + 3), 16);
 }
 
-t_point	**set_matrix(t_point **matrix, char **map)
+void	get_columns(t_map *env, int i)
 {
-	int		i;
-	int		j;
+	t_point	*point;
 	char	**line_tab;
-	t_point	*new;
-
-	i = -1;
-	while (map[++i] != NULL)
+	int		j;
+	
+	line_tab = ft_split(env->grid2d[i], ' ');
+	j = -1;
+	while (++j < env->cols)
 	{
-		line_tab = ft_split(map[i], ' ');
-		j = -1;
-		while (line_tab[++j] != NULL)
-		{
-			new = new_point(i, j, 0, 0xFFFFFF);
-			if (!new)
-				print_error(ENOMEM);
-			if (ft_strchr(line_tab[j], ',') != NULL)
-				get_alt_and_colour(new, line_tab[j]);
-			else
-				new->z = ft_atoi(line_tab[j]);
-			point_addback(matrix, new);
-		}
-		free_array(line_tab);
+		point = &(env->grid3d[i][j]);
+		point->x = j * (env->interval);
+		point->y = i * (env->interval);
+		if (ft_strchr(line_tab[j], ',') != NULL)
+			get_alt_and_colour(line_tab[j], point);
+		else
+			point->z = ft_atoi(line_tab[j]);
+		env->max = get_max(env->max, point->z);
+		env->min = get_min(env->min, point->z);
 	}
-	return (matrix);
+	free_array((void **)line_tab);
+
 }
 
-t_point	**get_matrix(char **map)
+static void	malloc_grid(t_map *env)
 {
-	t_point	**matrix;
-	int		nb_pts;
+	int	i;
 
-	nb_pts = count_points(map);
-	matrix = (t_point **)malloc(sizeof(t_point *) * (nb_pts + 1));
-	if (!matrix)
+	env->grid3d = malloc(sizeof(t_point *) * env->rows);
+	if (!(env->grid3d))
 	{
-		free_array(map);
+		free_array((void **)env->grid3d);
 		print_error(ENOMEM);
 	}
-	matrix[0] = NULL;
-	matrix[nb_pts] = NULL;
-	matrix = set_matrix(matrix, map);
-	init_window(matrix);
-	return (matrix);
+	i = -1;
+	while (++i < env->rows)
+	{
+		env->grid3d[i] = malloc(sizeof(t_point) * env->cols);
+		if (!(env->grid3d[i]))
+		{
+			free_array((void **)env->grid3d);
+			print_error(ENOMEM);
+		}
+	}
+}
+
+void	set_matrix(t_map *env)
+{
+	int		i;
+
+	count_columns(env);
+	malloc_grid(env);
+	i = -1;
+	while (env->grid2d[++i] != NULL)
+		get_columns(env, i);
+	//print_matrix(env);
+	init_window(env);
 }

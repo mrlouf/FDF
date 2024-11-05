@@ -13,22 +13,25 @@
 #include "../includes/fdf.h"
 #include "../libft/libft.h"
 
-/*	TODO.
-	- Open a window with MLX42
-	- Draw each point
-*/
+void	init_env(t_map *env)
+{
+	env->rows = 0;
+	env->cols = 0;
+	env->max = 0;
+	env->min = 0;
+	env->interval = 30;	// TODO find a calculation for interval depending on map size (interval * rows?)
+}
 
 int	main(int ac, char **av)
 {
-	char	**map;
-	t_point	**matrix;
+	t_map	env;
 
 	if (ac == 2)
 	{
-		map = check_input(av[1]);
-		matrix = get_matrix(map);
-		free_array(map);
-		free_matrix(matrix);
+		init_env(&env);
+		check_input(av[1], &env);
+		set_matrix(&env);
+		//free_matrix(env.grid3d);
 	}
 	else
 		print_error(EINVAL);
