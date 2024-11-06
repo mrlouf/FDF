@@ -40,11 +40,18 @@
 
 typedef struct s_point
 {
+	float	x;
+	float	y;
+	float	z;
+	int		colour;
+}	t_point;
+
+typedef struct s_fpoint
+{
 	int	x;
 	int	y;
 	int	z;
-	int	colour;
-}	t_point;
+}	t_fpoint;
 
 typedef struct s_map
 {
@@ -53,8 +60,13 @@ typedef struct s_map
 	int			max;
 	int			min;
 	int			interval;
+	float		altitude;
+	float		alpha;
+	float		beta;
+	float		zoom;
 	char		**grid2d;
 	t_point		**grid3d;
+	t_fpoint	**fgrid;
 	mlx_image_t	*img;
 }	t_map;
 
@@ -67,32 +79,36 @@ typedef struct s_fdf
 
 //		CHECK AND PARSE INPUT
 
-void	check_input(char *file, t_map *env);
-void	get_content(int fd, t_map *env);
-int		check_extension(char *file);
-int		count_rows(int fd);
-int		count_rows(int fd);
+void		check_input(char *file, t_map *env);
+void		get_content(int fd, t_map *env);
+int			check_extension(char *file);
+int			count_rows(int fd);
+int			count_rows(int fd);
 
 //		SET MATRIX
 
-void	init_env(t_map *env);
-void	get_matrix(t_map *env);
-void	set_matrix(t_map *env);
-void	count_columns(t_map *env);
-void	get_columns(t_map *env, int i);
-int		get_max(int	a, int b);
-int		get_min(int	a, int b);
+void		init_env(t_map *env);
+void		get_matrix(t_map *env);
+void		set_matrix(t_map *env);
+void		count_columns(t_map *env);
+void		get_columns(t_map *env, int i);
+int			get_max(int	a, int b);
+int			get_min(int	a, int b);
 
 //		WINDOW AND DRAWING
 
-int		init_window(t_map *env);
-void	ft_hook(void* param);
+int			init_window(t_map *env);
+void		ft_hook(void* param);
+void		project(t_map *env, int i);
+void		bresenham(mlx_image_t *img, t_fpoint start, t_fpoint end);
+mlx_image_t	*draw_image(mlx_t *mlx, t_map *env);
+void		draw_line(mlx_image_t *img, t_map *env, int x, int y);
 
 //		ERROR, FREE & DEBUG
 
-void	print_error(int err);
-void	free_array(void **array);
-void	free_matrix(t_map *env);
-void	print_matrix(t_map *env);
+void		print_error(int err);
+void		free_array(void **array);
+void		free_matrix(t_map *env);
+void		print_matrix(t_map *env);
 
 #endif

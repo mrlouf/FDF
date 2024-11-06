@@ -22,67 +22,86 @@ void	ft_hook(void *param)
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 }
-/*
-void	bresenham(mlx_image_t *img, t_point start, t_point end)
+
+
+void	bresenham(mlx_image_t *img, t_fpoint start, t_fpoint end)
 {
-	int		error[2];
-	t_point	tmp;
+	int			error[2];
+	t_fpoint	tmp;
 	
 	tmp.x = start.x;
 	tmp.y = start.y;
-	tmp.colour = start.colour;
-	error[0] = abs(end.x - start.x) - abs(end.y - start.y);
-	while (tmp.x < end.x || tmp.y < end.y)
+	error[0] = fabs(end.x - start.x) - fabs(end.y - start.y);
+	while (tmp.x != end.x || tmp.y != end.y)
 	{
-		if ((uint32_t)tmp.x < img->width && (uint32_t)tmp.y < img->height)
+		printf("+x=%f y=%f\n", tmp.x, tmp.y);
+		printf("-x=%f y=%f\n", end.x, end.y);
+		if (tmp.x >= 0 && (uint32_t)tmp.x < img->width
+			&& tmp.y >= 0 && (uint32_t)tmp.y < img->height)
 			mlx_put_pixel(img, tmp.x, tmp.y, 0xFFFFFF);
-		if (error[1] > -abs(end.y - start.y))
+		error[1] = 2 * error[0];
+		if (error[1] > -fabs(end.y - start.y))
 		{
-			error[0] -= abs(end.y - start.y);
+			error[0] -= fabs(end.y - start.y);
 			tmp.x += (start.x < end.x);
 			tmp.x -= (end.x < start.x);
 		}
-		if (error[1] < abs(end.x - start.x))
+		if (error[1] < fabs(end.x - start.x))
 		{
-			error[0] += abs(end.x - start.x);
+			error[0] += fabs(end.x - start.x);
 			tmp.y += (start.y < end.y);
 			tmp.y -= (end.y < start.y);
 		}
 	}
 }
-*/
 
-void	bresenham(mlx_image_t *img, t_point start, t_point end)
+/*
+void	bresenham(mlx_image_t *img, t_fpoint start, t_fpoint end)
 {
-	t_point	tmp;
+	float	x;
+	float	y;
+	float	delta_x;
+	float	delta_y;
+	float	step;
+	int		i;
 
-	tmp.x = start.x;
-	tmp.y = start.y;
-	if (start.z != 0)
-		tmp.colour = 0xfee08bff;
+	delta_x = fabs(end.x - start.x);
+	delta_y = fabs(end.y - start.y);
+	if (delta_x >= delta_y)
+		step = delta_x;
 	else
-		tmp.colour = start.colour;
-	if ((uint32_t)tmp.x < img->width && (uint32_t)tmp.y < img->height)
+		step = delta_y;
+	delta_x = delta_x / step;
+	delta_y = delta_y / step;
+	x = start.x;
+	y = start.y;
+	i = 0;
+	while(i++ <= step)
 	{
-		while (tmp.x <= end.x)
-			mlx_put_pixel(img, (tmp.x)++, tmp.y, tmp.colour);
-		tmp.x = start.x;
-		while (tmp.y <= end.y)
-			mlx_put_pixel(img, tmp.x, (tmp.y)++, tmp.colour);
+		if (x >= 0 && (uint32_t)x < img->width
+			&& y >= 0 && (uint32_t)y < img->height)
+		{
+			printf("x=%f y=%f\n", x, y);
+			mlx_put_pixel(img, x, y, 0xFFFFFF);
+		}
+		x += delta_x;
+		y += delta_y;
 	}
-}
+}*/
 
 void	draw_line(mlx_image_t *img, t_map *env, int x, int y)
 {
+	printf("+x=%f y=%f\n", env->fgrid[x][y].x, env->fgrid[x][y].y);
+	printf("-x=%f y=%f\n", env->fgrid[x + 1][y].x, env->fgrid[x + 1][y].y);
 	if (x == env->rows && y == env->cols)
 		return ;
 	if (x + 1 < env->rows)
 	{
-		bresenham(img, env->grid3d[x][y], env->grid3d[x + 1][y]);
+		bresenham(img, env->fgrid[x][y], env->fgrid[x + 1][y]);
 	}
 	if (y + 1 < env->cols)
 	{
-		bresenham(img, env->grid3d[x][y], env->grid3d[x][y + 1]);
+		bresenham(img, env->fgrid[x][y], env->fgrid[x][y + 1]);
 	}
 }
 

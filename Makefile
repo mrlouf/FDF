@@ -31,7 +31,7 @@ LIBS		=	$(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a /usr/lib/x86_64-linux-gnu
 
 CC			=	-cc
 
-CFLAGS		=	-Werror -Wextra -Wall -g#-fsanitize=address#-ldl -lglfw -pthread -lm
+CFLAGS		=	-Werror -Wextra -Wall -g -fsanitize=address#-ldl -lglfw -pthread -lm
 
 INCLUDE		=	-Iincludes
 

@@ -13,8 +13,6 @@
 #include "../includes/fdf.h"
 #include "../libft/libft.h"
 
-/*	Slight variation of ft_strnstr to look for *.fdf files only		*/
-
 int	check_extension(char *file)
 {
 	int		i;
@@ -41,9 +39,6 @@ int	check_extension(char *file)
 	}
 	return (0);
 }
-
-/*	This function allocates an array of strings to put each line read by GNL
-	from the .fdf file.		*/
 
 void	get_content(int fd, t_map *env)
 {
