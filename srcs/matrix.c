@@ -86,11 +86,19 @@ void	project(t_map *env, int i)
 	j = -1;
 	while (++j < env->cols)
 	{
-		//printf("x=%i\n", env->grid3d[i][j].z);
-		env->fgrid[i][j].x = (int)(env->grid3d[i][j].x);
-		env->fgrid[i][j].y = (int)(env->grid3d[i][j].y);
+		env->fgrid[i][j].x = (int)env->grid3d[i][j].x * sinf(env->alpha) \
+			+ ((int)env->grid3d[i][j].z * sinf(env->alpha - 2) / 20);
+		env->fgrid[i][j].y = (int)env->grid3d[i][j].y * cosf(env->alpha) \
+			+ ((int)-env->grid3d[i][j].z * cosf(env->alpha - 2) / 20);
 		//printf("+x=%d y=%d\n", env->grid3d[i][j].x, env->grid3d[i][j].y);
 		//printf("-x=%f y=%f\n", env->fgrid[i][j].x, env->fgrid[i][j].y);
+		// TODO
+		if (env->grid3d[i][j].z > 0)
+			env->fgrid[i][j].colour = 0xE6F598FF;
+		else if (env->grid3d[i][j].z < 0)
+			env->fgrid[i][j].colour = 0x1500FF00;
+		else
+			env->fgrid[i][j].colour = env->grid3d[i][j].colour;
 	}
 }
 

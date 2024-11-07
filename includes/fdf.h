@@ -51,6 +51,7 @@ typedef struct s_fpoint
 	int	x;
 	int	y;
 	int	z;
+	int		colour;
 }	t_fpoint;
 
 typedef struct s_map

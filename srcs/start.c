@@ -23,37 +23,6 @@ void	ft_hook(void *param)
 		mlx_close_window(mlx);
 }
 
-/*
-void	bresenham(mlx_image_t *img, t_fpoint start, t_fpoint end)
-{
-	int			error[2];
-	t_fpoint	tmp;
-	
-	tmp.x = start.x;
-	tmp.y = start.y;
-	error[0] = fabs(end.x - start.x) - fabs(end.y - start.y);
-	while (tmp.x != end.x || tmp.y != end.y)
-	{
-		if (tmp.x >= 0 && (uint32_t)tmp.x < img->width
-			&& tmp.y >= 0 && (uint32_t)tmp.y < img->height)
-			mlx_put_pixel(img, tmp.x, tmp.y, 0xFFFFFF);
-		error[1] = 2 * error[0];
-		if (error[1] > -fabs(end.y - start.y))
-		{
-			error[0] -= fabs(end.y - start.y);
-			tmp.x += (start.x < end.x);
-			tmp.x -= (end.x < start.x);
-		}
-		if (error[1] < fabs(end.x - start.x))
-		{
-			error[0] += fabs(end.x - start.x);
-			tmp.y += (start.y < end.y);
-			tmp.y -= (end.y < start.y);
-		}
-	}
-}
-*/
-
 void	drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end)
 {
 	float	x;
@@ -63,13 +32,14 @@ void	drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end)
 	float	step;
 	int		i;
 
-	printf("start.x=%d start.y=%d\n", start.x, start.y);
-	delta_x = abs(end.x - start.x);
-	delta_y = abs(end.y - start.y);
-	if (delta_x >= delta_y)
-		step = delta_x;
+	//printf("start.x=%d start.y=%d\n", start.x, start.y);
+	//printf("end.x=%d end.y=%d\n", end.x, end.y);
+	delta_x = end.x - start.x;
+	delta_y = end.y - start.y;
+	if (fabs(delta_x) >= fabs(delta_y))
+		step = fabs(delta_x);
 	else
-		step = delta_y;
+		step = fabs(delta_y);
 	delta_x = delta_x / step;
 	delta_y = delta_y / step;
 	x = start.x;
@@ -77,11 +47,10 @@ void	drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end)
 	i = 0;
 	while(i++ <= step)
 	{
-		printf("x=%f y=%f\n", x, y);
-		if (x >= 0 && (uint32_t)x < img->width
-			&& y >= 0 && (uint32_t)y < img->height)
+		//printf("x=%f y=%f\n", x, y);
+		if ((uint32_t)x < img->width && (uint32_t)y < img->height)
 		{
-			mlx_put_pixel(img, x + (WINDOW_WIDTH / 3), y + (WINDOW_HEIGHT / 3), 0xFFFFFF);
+			mlx_put_pixel(img, x + (WINDOW_WIDTH / 4), y + (WINDOW_HEIGHT / 4), start.colour);
 		}
 		x += delta_x;
 		y += delta_y;
@@ -109,7 +78,7 @@ mlx_image_t	*draw_image(mlx_t *mlx, t_map *env)
 	mlx_image_t	*img;
 
 	img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	ft_memset(img->pixels, 0, img->width * img->height * sizeof(int32_t));
+	ft_memset(img->pixels, 000000, img->width * img->height * sizeof(int32_t));
 	i = -1;
 	while (++i < env->rows)
 	{

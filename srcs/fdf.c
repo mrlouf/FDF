@@ -13,15 +13,17 @@
 #include "../includes/fdf.h"
 #include "../libft/libft.h"
 
+/*	alpha = 0.78 radians or 45 degrees	*/
+
 void	init_env(t_map *env)
 {
 	env->rows = 0;
 	env->cols = 0;
 	env->max = 0;
 	env->min = 0;
-	env->interval = 30;
+	env->interval = 70;
 	env->altitude = 1;
-	env->alpha = 0.46373398 / 2;
+	env->alpha = 0.78;
 	env->beta = 0.46373398;
 	env->zoom = 18.5;
 }
