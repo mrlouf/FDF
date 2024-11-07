@@ -100,7 +100,7 @@ int			get_min(int	a, int b);
 int			init_window(t_map *env);
 void		ft_hook(void* param);
 void		project(t_map *env, int i);
-void		bresenham(mlx_image_t *img, t_fpoint start, t_fpoint end);
+void		drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end);
 mlx_image_t	*draw_image(mlx_t *mlx, t_map *env);
 void		draw_line(mlx_image_t *img, t_map *env, int x, int y);
 

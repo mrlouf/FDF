@@ -43,10 +43,10 @@ void	get_columns(t_map *env, int i)
 	while (++j < env->cols)
 	{
 		point = &(env->grid3d[i][j]);
-		point->x = (float)j * (env->interval) - WINDOW_WIDTH;
-		point->y = (float)i * (env->interval) - WINDOW_HEIGHT;
+		point->x = j * (env->interval);
+		point->y = i * (env->interval);
 		point->colour = 0xFFFFFF;
-		point->z = (float)ft_atoi(line_tab[j]) * (env->interval);
+		point->z = ft_atoi(line_tab[j]) * (env->interval);
 		if (ft_strchr(line_tab[j], ',') != NULL)
 			point->colour = ft_atoi_base((ft_strchr(line_tab[j], ',') + 3), 16);
 		env->max = get_max(env->max, point->z);
@@ -87,8 +87,8 @@ void	project(t_map *env, int i)
 	while (++j < env->cols)
 	{
 		//printf("x=%i\n", env->grid3d[i][j].z);
-		env->fgrid[i][j].x = (int)((env->grid3d[i][j].x * env->zoom - env->grid3d[i][j].y * env->zoom) * cos(env->alpha) + (WINDOW_WIDTH / 3));
-		env->fgrid[i][j].y = (int)(-env->grid3d[i][j].z * env->zoom + (env->grid3d[i][j].x * env->zoom + env->grid3d[i][j].y * env->zoom) * sin(env->beta) + (WINDOW_HEIGHT / 3));
+		env->fgrid[i][j].x = (int)(env->grid3d[i][j].x);
+		env->fgrid[i][j].y = (int)(env->grid3d[i][j].y);
 		//printf("+x=%d y=%d\n", env->grid3d[i][j].x, env->grid3d[i][j].y);
 		//printf("-x=%f y=%f\n", env->fgrid[i][j].x, env->fgrid[i][j].y);
 	}
@@ -106,5 +106,5 @@ void	set_matrix(t_map *env)
 	i = -1;
 	while (env->grid2d[++i] != NULL)
 		project(env, i);
-	init_window(env);
+
 }
