@@ -48,9 +48,9 @@ void	drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end)
 	while(i++ <= step)
 	{
 		//printf("x=%f y=%f\n", x, y);
-		if ((uint32_t)x < img->width && (uint32_t)y < img->height)
+		if ((uint32_t)x + (WINDOW_WIDTH / 3) < img->width && (uint32_t)y + (WINDOW_HEIGHT / 3) < img->height)
 		{
-			mlx_put_pixel(img, x + (WINDOW_WIDTH / 4), y + (WINDOW_HEIGHT / 4), start.colour);
+			mlx_put_pixel(img, x + (WINDOW_WIDTH / 3), y + (WINDOW_HEIGHT / 3), start.colour);
 		}
 		x += delta_x;
 		y += delta_y;
@@ -89,6 +89,16 @@ mlx_image_t	*draw_image(mlx_t *mlx, t_map *env)
 	return (img);
 }
 
+void	display_menu(mlx_t *mlx)
+{
+	int	x;
+	int	y;
+	
+	x = 20;
+	y = 20;
+	mlx_put_string(mlx, "WELCOME TO MY FDF", x, y);
+}
+
 int	init_window(t_map *env)
 {
 	mlx_t		*mlx;
@@ -98,6 +108,7 @@ int	init_window(t_map *env)
 	if (!mlx)
 		return (EXIT_FAILURE);
 	fdf.img = draw_image(mlx, env);
+	display_menu(mlx);
 	mlx_image_to_window(mlx, fdf.img, 0, 0);
 	mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop(mlx);

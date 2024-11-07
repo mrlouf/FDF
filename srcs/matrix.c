@@ -90,9 +90,9 @@ void	project(t_map *env, int i)
 			+ ((int)env->grid3d[i][j].z * sinf(env->alpha - 2) / 20);
 		env->fgrid[i][j].y = (int)env->grid3d[i][j].y * cosf(env->alpha) \
 			+ ((int)-env->grid3d[i][j].z * cosf(env->alpha - 2) / 20);
-		//printf("+x=%d y=%d\n", env->grid3d[i][j].x, env->grid3d[i][j].y);
-		//printf("-x=%f y=%f\n", env->fgrid[i][j].x, env->fgrid[i][j].y);
-		// TODO
+		env->fgrid[i][j].x = (env->fgrid[i][j].x / 2) - (env->fgrid[i][j].y / 2);
+		env->fgrid[i][j].y = (env->fgrid[i][j].x * 0.5) + (env->fgrid[i][j].y * 0.5);
+		
 		if (env->grid3d[i][j].z > 0)
 			env->fgrid[i][j].colour = 0xE6F598FF;
 		else if (env->grid3d[i][j].z < 0)

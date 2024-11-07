@@ -21,11 +21,10 @@ void	init_env(t_map *env)
 	env->cols = 0;
 	env->max = 0;
 	env->min = 0;
-	env->interval = 70;
+	env->interval = 100;
 	env->altitude = 1;
 	env->alpha = 0.78;
-	env->beta = 0.46373398;
-	env->zoom = 18.5;
+	env->zoom = 12.5;
 }
 
 int	main(int ac, char **av)
