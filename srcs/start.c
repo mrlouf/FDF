@@ -32,8 +32,6 @@ void	drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end)
 	float	step;
 	int		i;
 
-	//printf("start.x=%d start.y=%d\n", start.x, start.y);
-	//printf("end.x=%d end.y=%d\n", end.x, end.y);
 	delta_x = end.x - start.x;
 	delta_y = end.y - start.y;
 	if (fabs(delta_x) >= fabs(delta_y))

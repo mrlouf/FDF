@@ -22,7 +22,7 @@ void	init_env(t_map *env)
 	env->max = 0;
 	env->min = 0;
 	env->interval = 10;
-	env->altitude = 1;
+	env->elevation = 1;
 	env->alpha = 0.78;
 	env->zoom = 12.5;
 }

@@ -37,6 +37,42 @@ int	get_max(int a, int b)
 		return (b);
 }
 
+int	set_colour(double percentage)
+{
+	if (percentage < 0.1)
+		return (COLOUR_ONE);
+	else if (percentage < 0.2)
+		return (COLOUR_TWO);
+	else if (percentage < 0.3)
+		return (COLOUR_THREE);
+	else if (percentage < 0.4)
+		return (COLOUR_FOUR);
+	else if (percentage < 0.5)
+		return (COLOUR_FIVE);
+	else if (percentage < 0.6)
+		return (COLOUR_SIX);
+	else if (percentage < 0.7)
+		return (COLOUR_SEVEN);
+	else if (percentage < 0.8)
+		return (COLOUR_EIGHT);
+	else if (percentage < 0.9)
+		return (COLOUR_NINE);
+	else
+		return (COLOUR_TEN); 
+}
+
+double	get_percentage(int start, int end, int current)
+{
+	double	placement;
+	double	distance;
+
+	placement = current - start;
+	distance = end - start;
+	if (distance == 0)
+		return (1.0);
+	return (placement / distance);
+}
+
 int	get_min(int a, int b)
 {
 	if (a < b)

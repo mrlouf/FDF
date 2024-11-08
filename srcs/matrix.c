@@ -42,6 +42,8 @@ void	get_columns(t_map *env, int i)
 	j = -1;
 	while (++j < env->cols)
 	{
+		env->max = get_max(env->max, ft_atoi(line_tab[j]));
+		env->min = get_min(env->min, ft_atoi(line_tab[j]));
 		point = &(env->grid3d[i][j]);
 		point->x = j * (env->interval);
 		point->y = i * (env->interval);
@@ -49,8 +51,6 @@ void	get_columns(t_map *env, int i)
 		point->z = ft_atoi(line_tab[j]) * (env->interval);
 		if (ft_strchr(line_tab[j], ',') != NULL)
 			point->colour = ft_atoi_base((ft_strchr(line_tab[j], ',') + 3), 16);
-		env->max = get_max(env->max, point->z);
-		env->min = get_min(env->min, point->z);
 	}
 	free_array((void **)line_tab);
 }
@@ -81,23 +81,20 @@ void	malloc_grid(t_map *env)
 
 void	project(t_map *env, int i)
 {
-	int	j;
+	int		j;
+	float	percentage;
 
 	j = -1;
 	while (++j < env->cols)
 	{
 		env->fgrid[i][j].x = (int)env->grid3d[i][j].x * sinf(env->alpha) \
-			+ ((int)env->grid3d[i][j].z * sinf(env->alpha - 2) * 0.1);
+			+ ((int)env->grid3d[i][j].z * sinf(env->alpha - PI / 2) * env->elevation);
 		env->fgrid[i][j].y = (int)env->grid3d[i][j].y * cosf(env->alpha) \
-			+ ((int)-env->grid3d[i][j].z * cosf(env->alpha - 2) * 0.1);
+			+ ((int)-env->grid3d[i][j].z * cosf(env->alpha - PI / 2) * env->elevation);
 		env->fgrid[i][j].x = (env->fgrid[i][j].x / 2) - (env->fgrid[i][j].y / 2);
 		env->fgrid[i][j].y = (env->fgrid[i][j].x * 0.5) + (env->fgrid[i][j].y * 0.5);
-		if (env->grid3d[i][j].z > 0)
-			env->fgrid[i][j].colour = COLOUR_FOUR;
-		else if (env->grid3d[i][j].z < 0)
-			env->fgrid[i][j].colour = COLOUR_EIGHT;
-		else
-			env->fgrid[i][j].colour = env->grid3d[i][j].colour;
+		percentage = get_percentage(env->max, env->min, env->grid3d[i][j].z);
+		env->fgrid[i][j].colour = set_colour(percentage);
 	}
 }
 
@@ -111,6 +108,7 @@ void	set_matrix(t_map *env)
 	while (env->grid2d[++i] != NULL)
 		get_columns(env, i);
 	i = -1;
+	env->elevation = 117.9125 / (env->max - env->min) * 0.05;
 	while (env->grid2d[++i] != NULL)
 		project(env, i);
 }

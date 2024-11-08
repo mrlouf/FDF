@@ -25,16 +25,18 @@
 # define WINDOW_WIDTH 	1920
 # define WINDOW_HEIGHT 	1080
 
-# define COLOUR_ONE 	0xff0000ff
-# define COLOUR_TWO 	0xce5f00ff
-# define COLOUR_THREE 	0xa87300ff
-# define COLOUR_FOUR 	0x837d00ff
-# define COLOUR_FIVE 	0x418800ff
-# define COLOUR_SIX 	0x00874fff
-# define COLOUR_SEVEN 	0x007d73ff
-# define COLOUR_EIGHT 	0x007388ff
-# define COLOUR_NINE 	0x0067a1ff
-# define COLOUR_TEN 	0x0022ffff
+# define PI				3.14
+
+# define COLOUR_ONE 	0xab9a00ff
+# define COLOUR_TWO 	0x80960dff
+# define COLOUR_THREE 	0x4b902dff
+# define COLOUR_FOUR 	0x008846ff
+# define COLOUR_FIVE 	0x00765dff
+# define COLOUR_SIX 	0x006563ff
+# define COLOUR_SEVEN 	0x005563ff
+# define COLOUR_EIGHT 	0x004463ff
+# define COLOUR_NINE 	0x003266ff
+# define COLOUR_TEN 	0x02007cff
 
 //		POINT STRUCTURE (X = COL, Y = ROW, Z = ALTITUDE)
 
@@ -61,7 +63,7 @@ typedef struct s_map
 	int			max;
 	int			min;
 	int			interval;
-	float		altitude;
+	float		elevation;
 	float		alpha;
 	float		beta;
 	float		zoom;
@@ -104,6 +106,8 @@ void		project(t_map *env, int i);
 void		drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end);
 mlx_image_t	*draw_image(mlx_t *mlx, t_map *env);
 void		draw_line(mlx_image_t *img, t_map *env, int x, int y);
+double		get_percentage(int start, int end, int current);
+int			set_colour(double percentage);
 
 //		ERROR, FREE & DEBUG
 
