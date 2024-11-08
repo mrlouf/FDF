@@ -35,6 +35,17 @@ void	free_matrix(t_map *env)
 	env->grid3d = NULL;
 }
 
+void	free_fgrid(t_map *env)
+{
+	int	i;
+
+	i = -1;
+	while (++i < env->rows)
+		free(env->fgrid[i]);
+	free(env->fgrid);
+	env->fgrid = NULL;
+}
+
 void	print_error(int err)
 {
 	errno = err;

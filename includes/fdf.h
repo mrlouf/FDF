@@ -110,6 +110,7 @@ void		draw_line(mlx_image_t *img, t_map *env, int x, int y);
 void		print_error(int err);
 void		free_array(void **array);
 void		free_matrix(t_map *env);
+void		free_fgrid(t_map *env);
 void		print_matrix(t_map *env);
 
 #endif
