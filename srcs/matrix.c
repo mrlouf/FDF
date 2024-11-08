@@ -98,12 +98,26 @@ void	project(t_map *env, int i)
 	}
 }
 
+int	get_interval(t_map *env)
+{
+	int	interval_x;
+	int	interval_y;
+	
+	interval_x = WINDOW_WIDTH / (env->cols * cosf(30));
+	interval_y = WINDOW_HEIGHT / (env->rows * sinf(30));
+	if (interval_x > interval_y)
+		return (-interval_y + 1);
+	else
+		return (-interval_x + 1);
+}
+
 void	set_matrix(t_map *env)
 {
 	int		i;
 
 	count_columns(env);
 	malloc_grid(env);
+	env->interval = get_interval(env);
 	i = -1;
 	while (env->grid2d[++i] != NULL)
 		get_columns(env, i);

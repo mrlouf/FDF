@@ -62,7 +62,7 @@ typedef struct s_map
 	int			cols;
 	int			max;
 	int			min;
-	int			interval;
+	float		interval;
 	float		elevation;
 	float		alpha;
 	float		beta;
@@ -97,6 +97,7 @@ void		count_columns(t_map *env);
 void		get_columns(t_map *env, int i);
 int			get_max(int	a, int b);
 int			get_min(int	a, int b);
+int			get_interval(t_map *env);
 
 //		WINDOW AND DRAWING
 
