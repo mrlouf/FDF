@@ -45,7 +45,7 @@ void	get_columns(t_map *env, int i)
 		point = &(env->grid3d[i][j]);
 		point->x = j * (env->interval);
 		point->y = i * (env->interval);
-		point->colour = 0xFFFFFF;
+		point->colour = COLOUR_FIVE;
 		point->z = ft_atoi(line_tab[j]) * (env->interval);
 		if (ft_strchr(line_tab[j], ',') != NULL)
 			point->colour = ft_atoi_base((ft_strchr(line_tab[j], ',') + 3), 16);
@@ -87,15 +87,15 @@ void	project(t_map *env, int i)
 	while (++j < env->cols)
 	{
 		env->fgrid[i][j].x = (int)env->grid3d[i][j].x * sinf(env->alpha) \
-			+ ((int)env->grid3d[i][j].z * sinf(env->alpha - 2) * 0.2);
+			+ ((int)env->grid3d[i][j].z * sinf(env->alpha - 2) * 0.1);
 		env->fgrid[i][j].y = (int)env->grid3d[i][j].y * cosf(env->alpha) \
-			+ ((int)-env->grid3d[i][j].z * cosf(env->alpha - 2) * 0.2);
+			+ ((int)-env->grid3d[i][j].z * cosf(env->alpha - 2) * 0.1);
 		env->fgrid[i][j].x = (env->fgrid[i][j].x / 2) - (env->fgrid[i][j].y / 2);
 		env->fgrid[i][j].y = (env->fgrid[i][j].x * 0.5) + (env->fgrid[i][j].y * 0.5);
 		if (env->grid3d[i][j].z > 0)
-			env->fgrid[i][j].colour = 0xE6F598FF;
+			env->fgrid[i][j].colour = COLOUR_FOUR;
 		else if (env->grid3d[i][j].z < 0)
-			env->fgrid[i][j].colour = 0xE6F598FF;
+			env->fgrid[i][j].colour = COLOUR_EIGHT;
 		else
 			env->fgrid[i][j].colour = env->grid3d[i][j].colour;
 	}

@@ -25,16 +25,16 @@
 # define WINDOW_WIDTH 	1920
 # define WINDOW_HEIGHT 	1080
 
-# define COLOUR_ONE 	0x1500ff
-# define COLOUR_TWO 	0x005fff
-# define COLOUR_THREE 	0x00d2ff
-# define COLOUR_FOUR 	0x00ffb8
-# define COLOUR_FIVE 	0x00ff44
-# define COLOUR_SIX 	0x2fff00
-# define COLOUR_SEVEN 	0xa3ff00
-# define COLOUR_EIGHT 	0xffe700
-# define COLOUR_NINE 	0xff7400
-# define COLOUR_TEN 	0xff0000
+# define COLOUR_ONE 	0xff0000ff
+# define COLOUR_TWO 	0xce5f00ff
+# define COLOUR_THREE 	0xa87300ff
+# define COLOUR_FOUR 	0x837d00ff
+# define COLOUR_FIVE 	0x418800ff
+# define COLOUR_SIX 	0x00874fff
+# define COLOUR_SEVEN 	0x007d73ff
+# define COLOUR_EIGHT 	0x007388ff
+# define COLOUR_NINE 	0x0067a1ff
+# define COLOUR_TEN 	0x0022ffff
 
 //		POINT STRUCTURE (X = COL, Y = ROW, Z = ALTITUDE)
 
