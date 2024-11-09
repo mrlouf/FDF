@@ -17,8 +17,7 @@ SRC			=	srcs/fdf.c				\
 				srcs/error.c			\
 				srcs/matrix.c			\
 				srcs/start.c			\
-				srcs/matrix_utils.c		\
-				srcs/rotations.c
+				srcs/matrix_utils.c
 
 HEADER		=	$(INCLUDES)/fdf.h
 
@@ -32,7 +31,7 @@ LIBS		=	$(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a /usr/lib/x86_64-linux-gnu
 
 CC			=	-cc
 
-CFLAGS		=	-Werror -Wextra -Wall -pthread -g #-fsanitize=address -ldl -lglfw
+CFLAGS		=	-Werror -Wextra -Wall -pthread -g -fsanitize=address# -ldl -lm -lglfw
 
 INCLUDE		=	-Iincludes
 
@@ -47,7 +46,7 @@ libmlx:
 	$(CC) $(CFLAGS) $(INCLUDE) $(LIBS) -c $< -o $@
 
 $(NAME): $(OBJS) $(SRCS)
-	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) $(LIBS) -o $(NAME) -lm
+	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) $(LIBS) -o $(NAME)
 
 make_libft:
 	make -C libft

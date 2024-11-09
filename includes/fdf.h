@@ -97,9 +97,10 @@ void		get_matrix(t_map *env);
 void		set_matrix(t_map *env);
 void		count_columns(t_map *env);
 void		get_columns(t_map *env, int i);
+void		get_interval(t_map *env);
 int			get_max(int	a, int b);
 int			get_min(int	a, int b);
-int			get_interval(t_map *env);
+
 
 //		WINDOW AND DRAWING
 

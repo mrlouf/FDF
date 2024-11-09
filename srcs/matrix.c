@@ -103,7 +103,7 @@ void	project(t_map *env)
 	}
 }
 
-int	get_interval(t_map *env)
+void	set_interval(t_map *env)
 {
 	int	interval_x;
 	int	interval_y;
@@ -111,9 +111,9 @@ int	get_interval(t_map *env)
 	interval_x = WINDOW_WIDTH / (env->cols * cosf(35));
 	interval_y = WINDOW_HEIGHT / (env->rows * sinf(35));
 	if (interval_x > interval_y)
-		return (-interval_y + 1);
+		env->interval = -interval_y + 1;
 	else
-		return (-interval_x + 1);
+		env->interval = -interval_x + 1;
 }
 
 void	set_matrix(t_map *env)
@@ -125,6 +125,6 @@ void	set_matrix(t_map *env)
 	i = -1;
 	while (env->grid2d[++i] != NULL)
 		get_columns(env, i);
-	env->interval = get_interval(env);
-	env->elevation = 117.9125 / (env->max - env->min) * 0.05;
+	set_interval(env);
+	env->elevation = (env->max * env->min) % (env->max - env->min);
 }

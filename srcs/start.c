@@ -39,10 +39,10 @@ void	ft_hook(void *param)
 		fdf->map->interval -= 1;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_1))
 		fdf->map->alpha += 0.02;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_3))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_2))
 		fdf->map->alpha -= 0.02;
-	//if (mlx_is_key_down(fdf->mlx, MLX_KEY_R))
-	//	init_env(fdf->map);
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_R))
+		init_env(fdf->map);
 	reset_image(fdf);
 	draw_image(fdf);
 }
