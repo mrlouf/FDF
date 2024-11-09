@@ -79,22 +79,27 @@ void	malloc_grid(t_map *env)
 	}
 }
 
-void	project(t_map *env, int i)
+void	project(t_map *env)
 {
+	int		i;
 	int		j;
 	float	percentage;
 
-	j = -1;
-	while (++j < env->cols)
+	i = -1;
+	while (++i < env->rows)
 	{
-		env->fgrid[i][j].x = (int)(env->grid3d[i][j].x * env->interval) * sinf(env->alpha) \
-			+ ((int)env->grid3d[i][j].z * sinf(env->alpha - PI / 2) * env->elevation);
-		env->fgrid[i][j].y = (int)(env->grid3d[i][j].y * env->interval) * cosf(env->alpha) \
-			+ ((int)-env->grid3d[i][j].z * cosf(env->alpha - PI / 2) * env->elevation);
-		env->fgrid[i][j].x = (env->fgrid[i][j].x / 2) - (env->fgrid[i][j].y / 2);
-		env->fgrid[i][j].y = (env->fgrid[i][j].x * 0.5) + (env->fgrid[i][j].y * 0.5);
-		percentage = get_percentage(env->max, env->min, env->grid3d[i][j].z);
-		env->fgrid[i][j].colour = set_colour(percentage);
+		j = -1;
+		while (++j < env->cols)
+		{
+			env->fgrid[i][j].x = (int)(env->grid3d[i][j].x * env->interval) * sinf(env->alpha) \
+				+ ((int)env->grid3d[i][j].z * sinf(env->alpha - PI / 2) * env->elevation);
+			env->fgrid[i][j].y = (int)(env->grid3d[i][j].y * env->interval) * cosf(env->alpha) \
+				+ ((int)-env->grid3d[i][j].z * cosf(env->alpha - PI / 2) * env->elevation);
+			env->fgrid[i][j].x = (env->fgrid[i][j].x / 2) - (env->fgrid[i][j].y / 2);
+			env->fgrid[i][j].y = (env->fgrid[i][j].x * 0.5) + (env->fgrid[i][j].y * 0.5);
+			percentage = get_percentage(env->max, env->min, env->grid3d[i][j].z);
+			env->fgrid[i][j].colour = set_colour(percentage);
+		}
 	}
 }
 
@@ -117,12 +122,9 @@ void	set_matrix(t_map *env)
 
 	count_columns(env);
 	malloc_grid(env);
-	env->interval = get_interval(env);
 	i = -1;
 	while (env->grid2d[++i] != NULL)
 		get_columns(env, i);
-	i = -1;
+	env->interval = get_interval(env);
 	env->elevation = 117.9125 / (env->max - env->min) * 0.05;
-	while (env->grid2d[++i] != NULL)
-		project(env, i);
 }

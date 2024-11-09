@@ -103,10 +103,10 @@ int			get_interval(t_map *env);
 
 int			init_window(t_map *env);
 void		ft_hook(void* param);
-void		project(t_map *env, int i);
+void		project(t_map *env);
 void		drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end);
-mlx_image_t	*draw_image(mlx_t *mlx, t_map *env);
-void		draw_line(mlx_image_t *img, t_map *env, int x, int y);
+void		draw_image(t_fdf *fdf);
+void		draw_line(t_fdf *fdf, int x, int y);
 double		get_percentage(int start, int end, int current);
 int			set_colour(double percentage);
 

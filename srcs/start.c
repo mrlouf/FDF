@@ -21,6 +21,11 @@ void	ft_hook(void *param)
 	fdf = param;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(fdf->mlx);
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_UP))
+		fdf->map->elevation += 0.05;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_DOWN))
+		fdf->map->elevation -= 0.05;
+	draw_image(fdf);
 }
 
 void	drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end)
@@ -54,36 +59,36 @@ void	drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end)
 	}
 }
 
-void	draw_line(mlx_image_t *img, t_map *env, int x, int y)
+void	draw_line(t_fdf *fdf, int x, int y)
 {
-	if (x == env->rows && y == env->cols)
+	if (x == fdf->map->rows && y == fdf->map->cols)
 		return ;
-	if (x + 1 < env->rows)
+	if (x + 1 < fdf->map->rows)
 	{
-		drawing_algo(img, env->fgrid[x][y], env->fgrid[x + 1][y]);
+		drawing_algo(fdf->img, fdf->map->fgrid[x][y], fdf->map->fgrid[x + 1][y]);
 	}
-	if (y + 1 < env->cols)
+	if (y + 1 < fdf->map->cols)
 	{
-		drawing_algo(img, env->fgrid[x][y], env->fgrid[x][y + 1]);
+		drawing_algo(fdf->img, fdf->map->fgrid[x][y], fdf->map->fgrid[x][y + 1]);
 	}
 }
 
-mlx_image_t	*draw_image(mlx_t *mlx, t_map *env)
+void	draw_image(t_fdf *fdf)
 {
 	int			i;
 	int			j;
-	mlx_image_t	*img;
 
-	img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	ft_memset(img->pixels, 0, img->width * img->height * sizeof(int32_t));
+	//fdf->img = mlx_new_image(fdf->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	project(fdf->map);
 	i = -1;
-	while (++i < env->rows)
+	while (++i < fdf->map->rows)
 	{
 		j = -1;
-		while (++j < env->cols)
-			draw_line(img, env, i, j);
+		while (++j < fdf->map->cols)
+		{
+			draw_line(fdf, i, j);
+		}
 	}
-	return (img);
 }
 
 void	display_menu(mlx_t *mlx)
@@ -101,9 +106,11 @@ int	init_window(t_map *env)
 	t_fdf		fdf;
 
 	fdf.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "FDF@nponchon", true);
+	fdf.img = mlx_new_image(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	ft_memset(fdf.img->pixels, 0, fdf.img->width * fdf.img->height * sizeof(int32_t));
 	if (!fdf.mlx)
 		return (EXIT_FAILURE);
-	fdf.img = draw_image(fdf.mlx, env);
+	fdf.map = env;
 	display_menu(fdf.mlx);
 	mlx_image_to_window(fdf.mlx, fdf.img, 0, 0);
 	mlx_loop_hook(fdf.mlx, ft_hook, &fdf);
