@@ -17,11 +17,12 @@ SRC			=	srcs/fdf.c				\
 				srcs/error.c			\
 				srcs/matrix.c			\
 				srcs/start.c			\
-				srcs/matrix_utils.c
+				srcs/matrix_utils.c		\
+				srcs/matrix_utils2.c
 
-HEADER		=	$(INCLUDES)/fdf.h
+HEADER		:=	$(INCLUDES)/fdf.h
 
-MAKE		=	Makefile
+MAKE		:=	Makefile
 
 OBJS		=	$(SRC:%.c=%.o)
 
@@ -31,9 +32,9 @@ LIBS		=	$(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a /usr/lib/x86_64-linux-gnu
 
 CC			=	-cc
 
-CFLAGS		=	-Werror -Wextra -Wall -pthread -g -fsanitize=address# -ldl -lm -lglfw
+CFLAGS		=	-Werror -Wextra -Wall -pthread -g -fsanitize=address#-lglfw
 
-INCLUDE		=	-I includes
+INCLUDE		=	-Iincludes
 
 # -=-=-=-=-    TARGETS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
@@ -42,11 +43,11 @@ all: make_libft libmlx $(NAME)
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-%.o: %.c $(HEADER) Makefile
+%.o: %.c $(HEADER) $(MAKE)
 	$(CC) $(CFLAGS) $(INCLUDE) $(LIBS) -c $< -o $@
 
-$(NAME): $(OBJS) $(SRCS)
-	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) $(LIBS) -o $(NAME)
+$(NAME): $(OBJS) $(SRCS) $(MAKE) includes/fdf.h
+	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) -lm -ldl -Ofast $(LIBS) -o $(NAME)
 
 make_libft:
 	make -C libft

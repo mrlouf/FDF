@@ -13,20 +13,17 @@
 #include "../includes/fdf.h"
 #include "../libft/libft.h"
 
-void	print_matrix(t_map *env)
+void	set_interval(t_map *env)
 {
-	int	i;
-	int	j;
+	int	interval_x;
+	int	interval_y;
 
-	i = -1;
-	while (++i < env->rows)
-	{
-		j = -1;
-		while (++j < env->cols)
-			ft_printf("%d,%d,%d ", env->grid3d[i][j].x,
-				env->grid3d[i][j].y, env->grid3d[i][j].z);
-		ft_printf("\n");
-	}
+	interval_x = WINDOW_WIDTH / (env->cols * cosf(35));
+	interval_y = WINDOW_HEIGHT / (env->rows * sinf(35));
+	if (interval_x > interval_y)
+		env->interval = -interval_y / 2;
+	else
+		env->interval = -interval_x / 2;
 }
 
 int	get_max(int a, int b)
@@ -47,7 +44,7 @@ int	get_min(int a, int b)
 
 int	set_colour(double percentage)
 {
-	if (percentage < 0.1)
+	if (percentage < 0.05)
 		return (COLOUR_ONE);
 	else if (percentage < 0.2)
 		return (COLOUR_TWO);
@@ -66,7 +63,7 @@ int	set_colour(double percentage)
 	else if (percentage < 0.9)
 		return (COLOUR_NINE);
 	else
-		return (COLOUR_TEN); 
+		return (COLOUR_TEN);
 }
 
 double	get_percentage(int start, int end, int current)

@@ -52,7 +52,8 @@ void	get_columns(t_map *env, int i)
 		if (ft_strchr(line_tab[j], ',') != NULL)
 		{
 			env->map_colour = 1;
-			point->colour = ft_atoi_base((ft_strchr(line_tab[j], ',') + 3), 16) + 255;
+			point->colour = ft_atoi_base((ft_strchr(line_tab[j], ',') + 3), 16)
+				+ 255;
 		}
 	}
 	free_array((void **)line_tab);
@@ -82,11 +83,10 @@ void	malloc_grid(t_map *env)
 	}
 }
 
-void	project(t_map *env)
+void	set_projection(t_map *env)
 {
 	int		i;
 	int		j;
-	float	percentage;
 
 	i = -1;
 	while (++i < env->rows)
@@ -94,36 +94,21 @@ void	project(t_map *env)
 		j = -1;
 		while (++j < env->cols)
 		{
-			env->fgrid[i][j].x = (int)(env->grid3d[i][j].x * env->interval) * sinf(env->alpha) \
-				+ ((int)env->grid3d[i][j].z * sinf(env->alpha - PI / 2) * env->elevation);
-			env->fgrid[i][j].y = (int)(env->grid3d[i][j].y * env->interval) * cosf(env->alpha) \
-				+ ((int)-env->grid3d[i][j].z * cosf(env->alpha - PI / 2) * env->elevation);
-			env->fgrid[i][j].x = (env->fgrid[i][j].x / 2) - (env->fgrid[i][j].y / 2);
-			env->fgrid[i][j].y = (env->fgrid[i][j].x * 0.5) + (env->fgrid[i][j].y * 0.5);
+			env->fgrid[i][j].x = (int)(env->grid3d[i][j].x * env->interval)
+				* sinf(env->alpha) + ((int)env->grid3d[i][j].z
+					* sinf(env->alpha - PI / 2) * env->elevation);
+			env->fgrid[i][j].y = (int)(env->grid3d[i][j].y * env->interval)
+				* cosf(env->alpha) + ((int)-env->grid3d[i][j].z
+					* cosf(env->alpha - PI / 2) * env->elevation);
+			env->fgrid[i][j].x = (env->fgrid[i][j].x / env->beta)
+				- (env->fgrid[i][j].y / env->beta);
+			env->fgrid[i][j].y = (env->fgrid[i][j].x / env->beta)
+				+ (env->fgrid[i][j].y / env->beta);
 			env->fgrid[i][j].x *= env->zoom;
 			env->fgrid[i][j].y *= env->zoom;
-			if (!env->map_colour)
-			{
-				percentage = get_percentage(env->max, env->min, env->grid3d[i][j].z);
-				env->fgrid[i][j].colour = set_colour(percentage);
-			}
-			else
-				env->fgrid[i][j].colour = env->grid3d[i][j].colour;
+			set_pointcolour(env, i, j);
 		}
 	}
-}
-
-void	set_interval(t_map *env)
-{
-	int	interval_x;
-	int	interval_y;
-	
-	interval_x = WINDOW_WIDTH / (env->cols * cosf(35));
-	interval_y = WINDOW_HEIGHT / (env->rows * sinf(35));
-	if (interval_x > interval_y)
-		env->interval = -interval_y + 1;
-	else
-		env->interval = -interval_x + 1;
 }
 
 void	set_matrix(t_map *env)
@@ -136,4 +121,6 @@ void	set_matrix(t_map *env)
 	while (env->grid2d[++i] != NULL)
 		get_columns(env, i);
 	set_interval(env);
+	if (env->max > 10)
+		env->elevation = 1.05;
 }

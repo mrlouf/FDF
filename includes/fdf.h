@@ -27,7 +27,9 @@
 
 # define PI				3.14
 
-# define COLOUR_ONE 	0xab9a00ff
+//	Colour gradient from red to blue
+
+# define COLOUR_ONE 	0xB8890Fff//0xab9a00ff
 # define COLOUR_TWO 	0x80960dff
 # define COLOUR_THREE 	0x4b902dff
 # define COLOUR_FOUR 	0x008846ff
@@ -36,7 +38,7 @@
 # define COLOUR_SEVEN 	0x005563ff
 # define COLOUR_EIGHT 	0x004463ff
 # define COLOUR_NINE 	0x003266ff
-# define COLOUR_TEN 	0x02007cff
+#  define COLOUR_TEN 	0x02007cff
 
 //		POINT STRUCTURE (X = COL, Y = ROW, Z = ALTITUDE)
 
@@ -55,6 +57,15 @@ typedef struct s_fpoint
 	int	z;
 	int		colour;
 }	t_fpoint;
+
+typedef	struct s_delta
+{
+	float	x;
+	float	y;
+	float	dx;
+	float	dy;
+	float	step;
+}	t_delta;
 
 typedef struct s_map
 {
@@ -98,23 +109,24 @@ void		get_matrix(t_map *env);
 void		set_matrix(t_map *env);
 void		count_columns(t_map *env);
 void		get_columns(t_map *env, int i);
-void		get_interval(t_map *env);
+void		set_interval(t_map *env);
 int			get_max(int	a, int b);
 int			get_min(int	a, int b);
-int			ft_atoi_base(char *str, int base);
-int			get_digit(char c, int digits_in_base);
+void		set_pointcolour(t_map *env, int i, int j);
 
 //		WINDOW AND DRAWING
 
 int			init_window(t_map *env);
 void		ft_hook(void* param);
-void		project(t_map *env);
+void		set_projection(t_map *env);
 void		drawing_algo(t_fdf *fdf, t_fpoint start, t_fpoint end);
 void		draw_image(t_fdf *fdf);
 void		draw_line(t_fdf *fdf, int x, int y);
 void		reset_image(t_fdf *fdf);
 double		get_percentage(int start, int end, int current);
 int			set_colour(double percentage);
+void		display_menu(t_fdf *fdf);
+
 
 //		ERROR, FREE & DEBUG
 

@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   matrix_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nponchon <nponchon@42.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/09 16:28:13 by nponchon          #+#    #+#             */
-/*   Updated: 2024/11/09 16:28:15 by nponchon         ###   ########.fr       */
+/*   Created: 2024/11/09 20:25:16 by nponchon          #+#    #+#             */
+/*   Updated: 2024/11/09 20:25:18 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 #include "../libft/libft.h"
 
+void	set_pointcolour(t_map *env, int i, int j)
+{
+	float	percentage;
 
+	percentage = 0;
+	if (!env->map_colour)
+	{
+		percentage = get_percentage(env->max, env->min, env->grid3d[i][j].z);
+		env->fgrid[i][j].colour = set_colour(percentage);
+	}
+	else
+		env->fgrid[i][j].colour = env->grid3d[i][j].colour;
+}
