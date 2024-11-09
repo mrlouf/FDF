@@ -37,6 +37,14 @@ int	get_max(int a, int b)
 		return (b);
 }
 
+int	get_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	else
+		return (b);
+}
+
 int	set_colour(double percentage)
 {
 	if (percentage < 0.1)
@@ -71,12 +79,4 @@ double	get_percentage(int start, int end, int current)
 	if (distance == 0)
 		return (1.0);
 	return (placement / distance);
-}
-
-int	get_min(int a, int b)
-{
-	if (a < b)
-		return (a);
-	else
-		return (b);
 }

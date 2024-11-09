@@ -34,9 +34,9 @@ void	ft_hook(void *param)
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_RIGHT))
 		fdf->map->offset_x += 5;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_EQUAL))
-		fdf->map->interval += 1;
+		fdf->map->zoom += 0.015;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_MINUS))
-		fdf->map->interval -= 1;
+		fdf->map->zoom -= 0.015;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_1))
 		fdf->map->alpha += 0.02;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_2))
@@ -49,7 +49,18 @@ void	ft_hook(void *param)
 
 void	reset_image(t_fdf *fdf)
 {
-	ft_memset(fdf->img->pixels, 0, fdf->img->width * fdf->img->height * sizeof(int32_t));
+	int	i;
+	int	j;
+
+	i = -1;
+	while ((uint32_t)++i < fdf->img->width)
+	{
+		j = -1;
+		while ((uint32_t)++j < fdf->img->height)
+		{
+			mlx_put_pixel(fdf->img, i, j, 0x000000FF);
+		}
+	}
 }
 
 void	drawing_algo(t_fdf *fdf, t_fpoint start, t_fpoint end)
@@ -131,7 +142,7 @@ int	init_window(t_map *env)
 
 	fdf.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "FDF@nponchon", true);
 	fdf.img = mlx_new_image(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	ft_memset(fdf.img->pixels, 0, fdf.img->width * fdf.img->height * sizeof(int32_t));
+	//ft_memset(fdf.img->pixels, 0x000000FF, fdf.img->width * fdf.img->height * sizeof(int32_t));
 	if (!fdf.mlx)
 		return (EXIT_FAILURE);
 	fdf.map = env;

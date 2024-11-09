@@ -64,6 +64,7 @@ typedef struct s_map
 	int			min;
 	int			offset_x;
 	int			offset_y;
+	int			map_colour;
 	float		interval;
 	float		elevation;
 	float		alpha;
@@ -100,7 +101,8 @@ void		get_columns(t_map *env, int i);
 void		get_interval(t_map *env);
 int			get_max(int	a, int b);
 int			get_min(int	a, int b);
-
+int			ft_atoi_base(char *str, int base);
+int			get_digit(char c, int digits_in_base);
 
 //		WINDOW AND DRAWING
 

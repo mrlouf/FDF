@@ -54,7 +54,6 @@ void		*ft_memchr(const void *s, int c, size_t len);
 int			ft_memcmp(const void *b1, const void *b2, size_t len);
 char		*ft_strnstr(const char *big, const char *little, size_t len);
 long long	ft_atoi(const char *str);
-int			ft_atoi_base(const char *str, int base);
 
 // USING MALLOC
 

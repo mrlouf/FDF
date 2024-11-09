@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   ft_atoi_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nponchon <nponchon@42.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 10:07:10 by nponchon          #+#    #+#             */
-/*   Updated: 2024/10/30 15:30:08 by nponchon         ###   ########.fr       */
+/*   Created: 2024/11/09 16:47:56 by nponchon          #+#    #+#             */
+/*   Updated: 2024/11/09 16:48:02 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,26 @@ int	get_digit(char c, int digits_in_base)
 		return (-1);
 }
 
-int	ft_atoi_base(const char *str, int base)
+int	ft_atoi_base(char *str, int base)
 {
 	int	result;
 	int	sign;
 	int	digit;
+	int	i;
 
 	result = 0;
 	sign = 1;
+	i = -1;
 	if (str == NULL || base < 2 || base > 16)
 		return (0);
-	if (*str == '-')
-	{
+	if (str[++i] == '-')
 		sign = -1;
-		++str;
-	}
-	while (*str)
+	while (str[++i])
 	{
 		digit = get_digit(ft_tolower(*str), base);
 		if (digit == -1)
 			break ;
 		result = result * base + digit;
-		++str;
 	}
 	return (result * sign);
 }

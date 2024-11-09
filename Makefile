@@ -33,7 +33,7 @@ CC			=	-cc
 
 CFLAGS		=	-Werror -Wextra -Wall -pthread -g -fsanitize=address# -ldl -lm -lglfw
 
-INCLUDE		=	-Iincludes
+INCLUDE		=	-I includes
 
 # -=-=-=-=-    TARGETS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 

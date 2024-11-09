@@ -47,10 +47,13 @@ void	get_columns(t_map *env, int i)
 		point = &(env->grid3d[i][j]);
 		point->x = j;
 		point->y = i;
-		point->colour = COLOUR_FIVE;
-		point->z = ft_atoi(line_tab[j]) * (env->interval);
+		point->colour = 0x000000FF;
+		point->z = ft_atoi(line_tab[j]);
 		if (ft_strchr(line_tab[j], ',') != NULL)
-			point->colour = ft_atoi_base((ft_strchr(line_tab[j], ',') + 3), 16);
+		{
+			env->map_colour = 1;
+			point->colour = ft_atoi_base((ft_strchr(line_tab[j], ',') + 3), 16) + 255;
+		}
 	}
 	free_array((void **)line_tab);
 }
@@ -97,8 +100,15 @@ void	project(t_map *env)
 				+ ((int)-env->grid3d[i][j].z * cosf(env->alpha - PI / 2) * env->elevation);
 			env->fgrid[i][j].x = (env->fgrid[i][j].x / 2) - (env->fgrid[i][j].y / 2);
 			env->fgrid[i][j].y = (env->fgrid[i][j].x * 0.5) + (env->fgrid[i][j].y * 0.5);
-			percentage = get_percentage(env->max, env->min, env->grid3d[i][j].z);
-			env->fgrid[i][j].colour = set_colour(percentage);
+			env->fgrid[i][j].x *= env->zoom;
+			env->fgrid[i][j].y *= env->zoom;
+			if (!env->map_colour)
+			{
+				percentage = get_percentage(env->max, env->min, env->grid3d[i][j].z);
+				env->fgrid[i][j].colour = set_colour(percentage);
+			}
+			else
+				env->fgrid[i][j].colour = env->grid3d[i][j].colour;
 		}
 	}
 }
@@ -126,5 +136,4 @@ void	set_matrix(t_map *env)
 	while (env->grid2d[++i] != NULL)
 		get_columns(env, i);
 	set_interval(env);
-	env->elevation = (env->max * env->min) % (env->max - env->min);
 }
