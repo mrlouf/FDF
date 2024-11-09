@@ -21,6 +21,8 @@ void	init_env(t_map *env)
 	env->cols = 0;
 	env->max = 0;
 	env->min = 0;
+	env->offset_x = WINDOW_WIDTH / 2;
+	env->offset_y = WINDOW_HEIGHT / 2;
 	env->interval = 5;
 	env->elevation = 1;
 	env->alpha = 0.78;

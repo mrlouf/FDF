@@ -21,14 +21,33 @@ void	ft_hook(void *param)
 	fdf = param;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(fdf->mlx);
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_W))
 		fdf->map->elevation += 0.05;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_S))
 		fdf->map->elevation -= 0.05;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_UP))
+		fdf->map->offset_y -= 5;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_DOWN))
+		fdf->map->offset_y += 5;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_LEFT))
+		fdf->map->offset_x -= 5;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_RIGHT))
+		fdf->map->offset_x += 5;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_EQUAL))
+		fdf->map->interval += 5;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_MINUS))
+		fdf->map->interval -= 5;
+		
+	reset_image(fdf);
 	draw_image(fdf);
 }
 
-void	drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end)
+void	reset_image(t_fdf *fdf)
+{
+	ft_memset(fdf->img->pixels, 0, fdf->img->width * fdf->img->height * sizeof(int32_t));
+}
+
+void	drawing_algo(t_fdf *fdf, t_fpoint start, t_fpoint end)
 {
 	float	x;
 	float	y;
@@ -50,9 +69,10 @@ void	drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end)
 	i = 0;
 	while(i++ <= step)
 	{
-		if ((uint32_t)x + (WINDOW_WIDTH / 2) < img->width && (uint32_t)y + (WINDOW_HEIGHT / 8) < img->height)
+		if ((uint32_t)x + fdf->map->offset_x < fdf->img->width
+			&& (uint32_t)y + fdf->map->offset_y < fdf->img->height)
 		{
-			mlx_put_pixel(img, x + (WINDOW_WIDTH / 2), y + (WINDOW_HEIGHT / 8), start.colour);
+			mlx_put_pixel(fdf->img, x + fdf->map->offset_x, y + fdf->map->offset_y, start.colour);
 		}
 		x += delta_x;
 		y += delta_y;
@@ -65,11 +85,11 @@ void	draw_line(t_fdf *fdf, int x, int y)
 		return ;
 	if (x + 1 < fdf->map->rows)
 	{
-		drawing_algo(fdf->img, fdf->map->fgrid[x][y], fdf->map->fgrid[x + 1][y]);
+		drawing_algo(fdf, fdf->map->fgrid[x][y], fdf->map->fgrid[x + 1][y]);
 	}
 	if (y + 1 < fdf->map->cols)
 	{
-		drawing_algo(fdf->img, fdf->map->fgrid[x][y], fdf->map->fgrid[x][y + 1]);
+		drawing_algo(fdf, fdf->map->fgrid[x][y], fdf->map->fgrid[x][y + 1]);
 	}
 }
 
@@ -78,7 +98,6 @@ void	draw_image(t_fdf *fdf)
 	int			i;
 	int			j;
 
-	//fdf->img = mlx_new_image(fdf->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	project(fdf->map);
 	i = -1;
 	while (++i < fdf->map->rows)

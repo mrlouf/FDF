@@ -62,6 +62,8 @@ typedef struct s_map
 	int			cols;
 	int			max;
 	int			min;
+	int			offset_x;
+	int			offset_y;
 	float		interval;
 	float		elevation;
 	float		alpha;
@@ -104,9 +106,10 @@ int			get_interval(t_map *env);
 int			init_window(t_map *env);
 void		ft_hook(void* param);
 void		project(t_map *env);
-void		drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end);
+void		drawing_algo(t_fdf *fdf, t_fpoint start, t_fpoint end);
 void		draw_image(t_fdf *fdf);
 void		draw_line(t_fdf *fdf, int x, int y);
+void		reset_image(t_fdf *fdf);
 double		get_percentage(int start, int end, int current);
 int			set_colour(double percentage);
 
