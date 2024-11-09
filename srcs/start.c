@@ -75,7 +75,7 @@ mlx_image_t	*draw_image(mlx_t *mlx, t_map *env)
 	mlx_image_t	*img;
 
 	img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	ft_memset(img->pixels, 000000, img->width * img->height * sizeof(int32_t));
+	ft_memset(img->pixels, 0xFF, img->width * img->height * sizeof(int32_t));
 	i = -1;
 	while (++i < env->rows)
 	{
@@ -98,17 +98,16 @@ void	display_menu(mlx_t *mlx)
 
 int	init_window(t_map *env)
 {
-	mlx_t		*mlx;
 	t_fdf		fdf;
 
-	mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "FDF@nponchon", true);
-	if (!mlx)
+	fdf.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "FDF@nponchon", true);
+	if (!fdf.mlx)
 		return (EXIT_FAILURE);
-	fdf.img = draw_image(mlx, env);
-	display_menu(mlx);
-	mlx_image_to_window(mlx, fdf.img, 0, 0);
-	mlx_loop_hook(mlx, ft_hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	fdf.img = draw_image(fdf.mlx, env);
+	display_menu(fdf.mlx);
+	mlx_image_to_window(fdf.mlx, fdf.img, 0, 0);
+	mlx_loop_hook(fdf.mlx, ft_hook, fdf.mlx);
+	mlx_loop(fdf.mlx);
+	mlx_terminate(fdf.mlx);
 	return (EXIT_SUCCESS);
 }

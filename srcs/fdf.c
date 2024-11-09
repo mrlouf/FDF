@@ -37,9 +37,9 @@ int	main(int ac, char **av)
 		check_input(av[1], &env);
 		set_matrix(&env);
 		free_array((void **)env.grid2d);
-		free_matrix(&env);
 		init_window(&env);
 		free_fgrid(&env);
+		free_matrix(&env);
 	}
 	else
 		print_error(EINVAL);
