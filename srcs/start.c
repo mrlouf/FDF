@@ -34,10 +34,15 @@ void	ft_hook(void *param)
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_RIGHT))
 		fdf->map->offset_x += 5;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_EQUAL))
-		fdf->map->interval += 5;
+		fdf->map->interval += 1;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_MINUS))
-		fdf->map->interval -= 5;
-		
+		fdf->map->interval -= 1;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_1))
+		fdf->map->alpha += 0.02;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_3))
+		fdf->map->alpha -= 0.02;
+	//if (mlx_is_key_down(fdf->mlx, MLX_KEY_R))
+	//	init_env(fdf->map);
 	reset_image(fdf);
 	draw_image(fdf);
 }
