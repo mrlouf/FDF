@@ -45,8 +45,8 @@ void	get_columns(t_map *env, int i)
 		env->max = get_max(env->max, ft_atoi(line_tab[j]));
 		env->min = get_min(env->min, ft_atoi(line_tab[j]));
 		point = &(env->grid3d[i][j]);
-		point->x = j * (env->interval);
-		point->y = i * (env->interval);
+		point->x = j;
+		point->y = i;
 		point->colour = COLOUR_FIVE;
 		point->z = ft_atoi(line_tab[j]) * (env->interval);
 		if (ft_strchr(line_tab[j], ',') != NULL)
@@ -87,9 +87,9 @@ void	project(t_map *env, int i)
 	j = -1;
 	while (++j < env->cols)
 	{
-		env->fgrid[i][j].x = (int)env->grid3d[i][j].x * sinf(env->alpha) \
+		env->fgrid[i][j].x = (int)(env->grid3d[i][j].x * env->interval) * sinf(env->alpha) \
 			+ ((int)env->grid3d[i][j].z * sinf(env->alpha - PI / 2) * env->elevation);
-		env->fgrid[i][j].y = (int)env->grid3d[i][j].y * cosf(env->alpha) \
+		env->fgrid[i][j].y = (int)(env->grid3d[i][j].y * env->interval) * cosf(env->alpha) \
 			+ ((int)-env->grid3d[i][j].z * cosf(env->alpha - PI / 2) * env->elevation);
 		env->fgrid[i][j].x = (env->fgrid[i][j].x / 2) - (env->fgrid[i][j].y / 2);
 		env->fgrid[i][j].y = (env->fgrid[i][j].x * 0.5) + (env->fgrid[i][j].y * 0.5);
@@ -103,8 +103,8 @@ int	get_interval(t_map *env)
 	int	interval_x;
 	int	interval_y;
 	
-	interval_x = WINDOW_WIDTH / (env->cols * cosf(30));
-	interval_y = WINDOW_HEIGHT / (env->rows * sinf(30));
+	interval_x = WINDOW_WIDTH / (env->cols * cosf(35));
+	interval_y = WINDOW_HEIGHT / (env->rows * sinf(35));
 	if (interval_x > interval_y)
 		return (-interval_y + 1);
 	else

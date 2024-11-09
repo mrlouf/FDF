@@ -16,11 +16,11 @@
 
 void	ft_hook(void *param)
 {
-	mlx_t	*mlx;
+	t_fdf	*fdf;
 
-	mlx = param;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
+	fdf = param;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(fdf->mlx);
 }
 
 void	drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end)
@@ -45,9 +45,9 @@ void	drawing_algo(mlx_image_t *img, t_fpoint start, t_fpoint end)
 	i = 0;
 	while(i++ <= step)
 	{
-		if ((uint32_t)x + (WINDOW_WIDTH / 2) < img->width && (uint32_t)y + (WINDOW_HEIGHT / 4) < img->height)
+		if ((uint32_t)x + (WINDOW_WIDTH / 2) < img->width && (uint32_t)y + (WINDOW_HEIGHT / 8) < img->height)
 		{
-			mlx_put_pixel(img, x + (WINDOW_WIDTH / 2), y + (WINDOW_HEIGHT / 4), start.colour);
+			mlx_put_pixel(img, x + (WINDOW_WIDTH / 2), y + (WINDOW_HEIGHT / 8), start.colour);
 		}
 		x += delta_x;
 		y += delta_y;
@@ -75,7 +75,7 @@ mlx_image_t	*draw_image(mlx_t *mlx, t_map *env)
 	mlx_image_t	*img;
 
 	img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	ft_memset(img->pixels, 0xFF, img->width * img->height * sizeof(int32_t));
+	ft_memset(img->pixels, 0, img->width * img->height * sizeof(int32_t));
 	i = -1;
 	while (++i < env->rows)
 	{
@@ -106,7 +106,7 @@ int	init_window(t_map *env)
 	fdf.img = draw_image(fdf.mlx, env);
 	display_menu(fdf.mlx);
 	mlx_image_to_window(fdf.mlx, fdf.img, 0, 0);
-	mlx_loop_hook(fdf.mlx, ft_hook, fdf.mlx);
+	mlx_loop_hook(fdf.mlx, ft_hook, &fdf);
 	mlx_loop(fdf.mlx);
 	mlx_terminate(fdf.mlx);
 	return (EXIT_SUCCESS);
