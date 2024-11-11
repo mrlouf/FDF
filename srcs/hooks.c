@@ -1,0 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nponchon <nponchon@42.com>                 +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/11 11:59:54 by nponchon          #+#    #+#             */
+/*   Updated: 2024/11/11 11:59:56 by nponchon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/fdf.h"
+#include "../libft/libft.h"
+
+void	ft_hook(void *param)
+{
+	t_fdf	*fdf;
+
+	fdf = param;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(fdf->mlx);
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_W))
+		if (fdf->map->elevation <= 5)
+			fdf->map->elevation += 0.05;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_S))
+		if (fdf->map->elevation > 0.05)
+			fdf->map->elevation -= 0.05;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_UP))
+		fdf->map->offset_y -= 5;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_DOWN))
+		fdf->map->offset_y += 5;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_LEFT))
+		fdf->map->offset_x -= 5;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_RIGHT))
+		fdf->map->offset_x += 5;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_M))
+		init_env(fdf->map);
+		//fdf->map->map_colour = -(fdf->map->map_colour);
+	reset_image(fdf);
+	draw_image(fdf);
+}
+
+void	ft_hook_rotations(void *param)
+{
+	t_fdf	*fdf;
+
+	fdf = param;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_EQUAL))
+		fdf->map->zoom += 0.025;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_MINUS))
+		fdf->map->zoom -= 0.025;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_1))
+		fdf->map->alpha += 0.02;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_2))
+		fdf->map->alpha -= 0.02;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_3))
+		fdf->map->beta += 0.02;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_4))
+		fdf->map->beta -= 0.02;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_R))
+		fdf->map->alpha = 1.57;
+}

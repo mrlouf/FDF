@@ -14,77 +14,6 @@
 #include "../libft/libft.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 
-void	ft_hook(void *param)
-{
-	t_fdf	*fdf;
-
-	fdf = param;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(fdf->mlx);
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_W))
-		if (fdf->map->elevation <= 5)
-			fdf->map->elevation += 0.05;
-			
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_S))
-		if (fdf->map->elevation >= 0.05)
-			fdf->map->elevation -= 0.05;
-			
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_UP))
-		fdf->map->offset_y -= 5;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_DOWN))
-		fdf->map->offset_y += 5;
-		
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_LEFT))
-		fdf->map->offset_x -= 5;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_RIGHT))
-		fdf->map->offset_x += 5;
-		
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_EQUAL))
-		fdf->map->zoom += 0.015;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_MINUS))
-		fdf->map->zoom -= 0.015;
-		
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_1))
-		fdf->map->alpha += 0.02;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_2))
-		fdf->map->alpha -= 0.02;
-		
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_3))
-		fdf->map->beta += 0.02;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_4))
-		fdf->map->beta -= 0.02;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_R))
-	{
-		fdf->map->alpha = 1.57;
-		//fdf->map->beta = 2;
-	}
-	
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_M))
-		fdf->map->map_colour = -(fdf->map->map_colour);
-	
-	display_menu(fdf);
-	reset_image(fdf);
-
-	draw_image(fdf);
-
-}
-
-void	reset_image(t_fdf *fdf)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while ((uint32_t)++i < fdf->img->width)
-	{
-		j = -1;
-		while ((uint32_t)++j < fdf->img->height)
-		{
-			mlx_put_pixel(fdf->img, i, j, 0x000000FF);
-		}
-	}
-}
-
 void	drawing_algo(t_fdf *fdf, t_fpoint start, t_fpoint end)
 {
 	t_delta	delta;
@@ -107,7 +36,7 @@ void	drawing_algo(t_fdf *fdf, t_fpoint start, t_fpoint end)
 			&& (uint32_t)delta.y + fdf->map->offset_y < fdf->img->height)
 		{
 			mlx_put_pixel(fdf->img, delta.x + fdf->map->offset_x,
-			delta.y + fdf->map->offset_y, start.colour);
+				delta.y + fdf->map->offset_y, start.colour);
 		}
 		delta.x += delta.dx;
 		delta.y += delta.dy;
@@ -133,6 +62,7 @@ void	draw_image(t_fdf *fdf)
 	int			i;
 	int			j;
 
+	display_menu(fdf);
 	set_projection(fdf->map);
 	i = -1;
 	while (++i < fdf->map->rows)
@@ -147,8 +77,8 @@ void	draw_image(t_fdf *fdf)
 
 void	display_menu(t_fdf *fdf)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	char	*str;
 
 	str = ft_itoa(fdf->map->elevation);
@@ -169,6 +99,7 @@ int	init_window(t_map *env)
 		return (EXIT_FAILURE);
 	fdf.map = env;
 	mlx_image_to_window(fdf.mlx, fdf.img, 0, 0);
+	mlx_loop_hook(fdf.mlx, ft_hook_rotations, &fdf);
 	mlx_loop_hook(fdf.mlx, ft_hook, &fdf);
 	mlx_loop(fdf.mlx);
 	mlx_delete_image(fdf.mlx, fdf.img);

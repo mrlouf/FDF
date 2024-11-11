@@ -24,7 +24,7 @@ void	init_env(t_map *env)
 	env->offset_x = WINDOW_WIDTH / 2;
 	env->offset_y = WINDOW_HEIGHT / 4;
 	env->interval = 5;
-	env->elevation = 20;
+	env->elevation = 0;
 	env->alpha = 0.78;
 	env->beta = 2;
 	env->zoom = 1;

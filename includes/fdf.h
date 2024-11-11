@@ -38,7 +38,7 @@
 # define COLOUR_SEVEN 	0x005563ff
 # define COLOUR_EIGHT 	0x004463ff
 # define COLOUR_NINE 	0x003266ff
-#  define COLOUR_TEN 	0x02007cff
+# define COLOUR_TEN 	0x02007cff
 
 //		POINT STRUCTURE (X = COL, Y = ROW, Z = ALTITUDE)
 
@@ -55,10 +55,10 @@ typedef struct s_fpoint
 	int	x;
 	int	y;
 	int	z;
-	int		colour;
+	int	colour;
 }	t_fpoint;
 
-typedef	struct s_delta
+typedef struct s_delta
 {
 	float	x;
 	float	y;
@@ -110,14 +110,15 @@ void		set_matrix(t_map *env);
 void		count_columns(t_map *env);
 void		get_columns(t_map *env, int i);
 void		set_interval(t_map *env);
-int			get_max(int	a, int b);
-int			get_min(int	a, int b);
+int			get_max(int a, int b);
+int			get_min(int a, int b);
 void		set_pointcolour(t_map *env, int i, int j);
 
 //		WINDOW AND DRAWING
 
 int			init_window(t_map *env);
-void		ft_hook(void* param);
+void		ft_hook(void *param);
+void		ft_hook_rotations(void *param);
 void		set_projection(t_map *env);
 void		drawing_algo(t_fdf *fdf, t_fpoint start, t_fpoint end);
 void		draw_image(t_fdf *fdf);
@@ -126,7 +127,6 @@ void		reset_image(t_fdf *fdf);
 double		get_percentage(int start, int end, int current);
 int			set_colour(double percentage);
 void		display_menu(t_fdf *fdf);
-
 
 //		ERROR, FREE & DEBUG
 

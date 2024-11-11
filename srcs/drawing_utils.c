@@ -26,3 +26,19 @@ void	set_pointcolour(t_map *env, int i, int j)
 	else
 		env->fgrid[i][j].colour = env->grid3d[i][j].colour;
 }
+
+void	reset_image(t_fdf *fdf)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while ((uint32_t)++i < fdf->img->width)
+	{
+		j = -1;
+		while ((uint32_t)++j < fdf->img->height)
+		{
+			mlx_put_pixel(fdf->img, i, j, 0x000000FF);
+		}
+	}
+}

@@ -1,53 +1,59 @@
 # -=-=-=-=-    NAME -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
 
-NAME		= 	fdf
+NAME		:= 	fdf
 
 # -=-=-=-=-    PATH -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
 
-INCS		=	includes
+INCS		:=	includes
 
-LIBFTDIR	=	libft
+LIBFTDIR	:=	libft
 
-LIBMLX		= 	MLX42
+URLMLX		:=	https://github.com/42-Madrid-Fundacion-Telefonica/MLX42.git
+
+MLXDIR		:= 	MLX42
 
 # -=-=-=-=-    FILES -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
-SRC			=	srcs/fdf.c				\
+SRC			:=	srcs/fdf.c				\
 				srcs/parser.c			\
 				srcs/error.c			\
 				srcs/matrix.c			\
 				srcs/start.c			\
 				srcs/matrix_utils.c		\
-				srcs/matrix_utils2.c
+				srcs/drawing_utils.c	\
+				srcs/hooks.c
+
+MLX_FLAG	:=	.mlx_flag
 
 HEADER		:=	$(INCLUDES)/fdf.h
 
 MAKE		:=	Makefile
 
-OBJS		=	$(SRC:%.c=%.o)
+OBJS		:=	$(SRC:%.c=%.o)
 
-LIBS		=	$(LIBFTDIR)/libft.a $(LIBMLX)/build/libmlx42.a /usr/lib/x86_64-linux-gnu/libglfw.so
+LIBS		:=	$(LIBFTDIR)/libft.a $(MLXDIR)/build/libmlx42.a /usr/lib/x86_64-linux-gnu/libglfw.so \
+				-lm -ldl -Ofast -pthread
 
 # -=-=-=-=-    FLAGS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
 
-CC			=	-cc
+CC			:=	-cc
 
-CFLAGS		=	-Werror -Wextra -Wall -pthread -g -fsanitize=address#-lglfw
+CFLAGS		:=	-Werror -Wextra -Wall -g -fsanitize=address#-lglfw
 
-INCLUDE		=	-Iincludes
+INCLUDE		:=	-Iincludes
 
 # -=-=-=-=-    TARGETS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
-all: make_libft libmlx $(NAME)
+all: make_libft $(NAME)
 
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-%.o: %.c $(HEADER) $(MAKE)
+%.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) $(INCLUDE) $(LIBS) -c $< -o $@
 
-$(NAME): $(OBJS) $(SRCS) $(MAKE) includes/fdf.h
-	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) -lm -ldl -Ofast $(LIBS) -o $(NAME)
+$(NAME): $(OBJS) $(SRCS) Makefile includes/fdf.h
+	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) $(LIBS) -o $(NAME)
 
 make_libft:
 	make -C libft

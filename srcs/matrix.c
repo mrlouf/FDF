@@ -122,5 +122,5 @@ void	set_matrix(t_map *env)
 		get_columns(env, i);
 	set_interval(env);
 	if (env->max > 10)
-		env->elevation = 1.05;
+		env->elevation = 0.00;
 }
