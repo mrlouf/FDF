@@ -76,6 +76,7 @@ typedef struct s_map
 	int			offset_x;
 	int			offset_y;
 	int			map_colour;
+	int			flat_mode;
 	float		interval;
 	float		elevation;
 	float		alpha;
@@ -120,8 +121,9 @@ int			init_window(t_map *env);
 void		ft_hook(void *param);
 void		ft_hook_rotations(void *param);
 void		set_projection(t_map *env);
+void		set_2dmode(t_map *env);
 void		drawing_algo(t_fdf *fdf, t_fpoint start, t_fpoint end);
-void		draw_image(t_fdf *fdf);
+void		draw_image(void *param);
 void		draw_line(t_fdf *fdf, int x, int y);
 void		reset_image(t_fdf *fdf);
 double		get_percentage(int start, int end, int current);

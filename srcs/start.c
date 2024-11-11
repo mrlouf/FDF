@@ -57,13 +57,18 @@ void	draw_line(t_fdf *fdf, int x, int y)
 	}
 }
 
-void	draw_image(t_fdf *fdf)
+void	draw_image(void *param)
 {
-	int			i;
-	int			j;
+	t_fdf	*fdf;
+	int		i;
+	int		j;
 
+	fdf = param;
 	display_menu(fdf);
-	set_projection(fdf->map);
+	if (fdf->map->flat_mode == -1)
+		set_projection(fdf->map);
+	else
+		set_2dmode(fdf->map);
 	i = -1;
 	while (++i < fdf->map->rows)
 	{
@@ -98,9 +103,11 @@ int	init_window(t_map *env)
 	if (!fdf.mlx || !fdf.img)
 		return (EXIT_FAILURE);
 	fdf.map = env;
+	display_menu(&fdf);
 	mlx_image_to_window(fdf.mlx, fdf.img, 0, 0);
 	mlx_loop_hook(fdf.mlx, ft_hook_rotations, &fdf);
 	mlx_loop_hook(fdf.mlx, ft_hook, &fdf);
+	mlx_loop_hook(fdf.mlx, draw_image, &fdf);
 	mlx_loop(fdf.mlx);
 	mlx_delete_image(fdf.mlx, fdf.img);
 	mlx_terminate(fdf.mlx);

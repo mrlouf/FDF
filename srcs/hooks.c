@@ -24,7 +24,7 @@ void	ft_hook(void *param)
 		if (fdf->map->elevation <= 5)
 			fdf->map->elevation += 0.05;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_S))
-		if (fdf->map->elevation > 0.05)
+		if (fdf->map->elevation >= 0.05)
 			fdf->map->elevation -= 0.05;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_UP))
 		fdf->map->offset_y -= 5;
@@ -34,11 +34,7 @@ void	ft_hook(void *param)
 		fdf->map->offset_x -= 5;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_RIGHT))
 		fdf->map->offset_x += 5;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_M))
-		init_env(fdf->map);
-		//fdf->map->map_colour = -(fdf->map->map_colour);
 	reset_image(fdf);
-	draw_image(fdf);
 }
 
 void	ft_hook_rotations(void *param)
@@ -54,10 +50,16 @@ void	ft_hook_rotations(void *param)
 		fdf->map->alpha += 0.02;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_2))
 		fdf->map->alpha -= 0.02;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_3))
-		fdf->map->beta += 0.02;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_4))
-		fdf->map->beta -= 0.02;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_T))
+		fdf->map->alpha = 0.78;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_R))
 		fdf->map->alpha = 1.57;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_P))
+		fdf->map->flat_mode = 1;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_O))
+		fdf->map->flat_mode = -1;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_I))
+		fdf->map->alpha = 0.866;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_U))
+		fdf->map->alpha = 0.78;
 }

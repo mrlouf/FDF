@@ -44,10 +44,10 @@ INCLUDE		:=	-Iincludes
 
 # -=-=-=-=-    TARGETS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
-all: make_libft $(NAME)
+all: make_libft libmlx $(NAME)
 
 libmlx:
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+	@cmake $(MLXDIR) -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4
 
 %.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) $(INCLUDE) $(LIBS) -c $< -o $@

@@ -28,7 +28,7 @@ void	init_env(t_map *env)
 	env->alpha = 0.78;
 	env->beta = 2;
 	env->zoom = 1;
-	env->map_colour = 0;
+	env->flat_mode = -1;
 }
 
 int	main(int ac, char **av)

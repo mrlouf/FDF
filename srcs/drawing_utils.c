@@ -38,7 +38,27 @@ void	reset_image(t_fdf *fdf)
 		j = -1;
 		while ((uint32_t)++j < fdf->img->height)
 		{
-			mlx_put_pixel(fdf->img, i, j, 0x000000FF);
+			mlx_put_pixel(fdf->img, i, j, 0x22222200);
+		}
+	}
+}
+
+void	set_2dmode(t_map *env)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	while (++i < env->rows)
+	{
+		j = -1;
+		while (++j < env->cols)
+		{
+			env->fgrid[i][j].x = (int)env->grid3d[i][j].x * env->interval;
+			env->fgrid[i][j].y = (int)env->grid3d[i][j].y * env->interval;
+			env->fgrid[i][j].x *= env->zoom;
+			env->fgrid[i][j].y *= env->zoom;
+			set_pointcolour(env, i, j);
 		}
 	}
 }
