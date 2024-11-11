@@ -42,13 +42,17 @@ void	ft_hook_rotations(void *param)
 
 	fdf = param;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_EQUAL))
-		fdf->map->zoom += 0.025;
+		if (fdf->map->zoom <= 1.25)
+			fdf->map->zoom += 0.025;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_MINUS))
-		fdf->map->zoom -= 0.025;
+		if (fdf->map->zoom >= 0.75)
+			fdf->map->zoom -= 0.025;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_1))
-		fdf->map->alpha += 0.02;
+		if (fdf->map->alpha <= 1.55)
+			fdf->map->alpha += 0.02;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_2))
-		fdf->map->alpha -= 0.02;
+		if (fdf->map->alpha >= 0.02)
+			fdf->map->alpha -= 0.02;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_R))
 		fdf->map->alpha = 0.78;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_Y))

@@ -32,7 +32,7 @@ MAKE		:=	Makefile
 OBJS		:=	$(SRC:%.c=%.o)
 
 LIBS		:=	$(LIBFTDIR)/libft.a $(MLXDIR)/build/libmlx42.a /usr/lib/x86_64-linux-gnu/libglfw.so \
-				-lm -ldl -Ofast -pthread
+				-lm -ldl -Ofast -pthread -lglfw
 
 # -=-=-=-=-    FLAGS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
 
@@ -68,4 +68,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY:  all clean fclean re make_libft
+.PHONY:  all clean fclean re make_libft libmlx
