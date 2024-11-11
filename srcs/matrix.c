@@ -36,7 +36,6 @@ void	get_columns(t_map *env, int i)
 {
 	t_point	*point;
 	char	**line_tab;
-	char	*hexa;
 	int		j;
 
 	line_tab = ft_split(env->grid2d[i], ' ');
@@ -53,8 +52,7 @@ void	get_columns(t_map *env, int i)
 		if (ft_strchr(line_tab[j], ',') != NULL)
 		{
 			env->map_colour = 1;
-			hexa = ft_strjoin(ft_strchr(line_tab[j], ',' + 3), "FF");
-			env->grid3d[i][j].colour = ft_atoi_base(hexa, 16);
+			env->grid3d[i][j].colour = ft_atoi_base(ft_strchr(line_tab[j], ',') + 3, 16);
 		}
 	}
 	free_array((void **)line_tab);

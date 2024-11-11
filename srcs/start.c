@@ -108,7 +108,6 @@ int	init_window(t_map *env)
 	if (!fdf.mlx || !fdf.img)
 		return (EXIT_FAILURE);
 	fdf.map = env;
-	display_menu(&fdf);
 	mlx_image_to_window(fdf.mlx, fdf.img, 0, 0);
 	mlx_loop_hook(fdf.mlx, ft_hook_rotations, &fdf);
 	mlx_loop_hook(fdf.mlx, ft_hook, &fdf);
