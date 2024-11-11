@@ -64,6 +64,7 @@ void	draw_image(void *param)
 	int		j;
 
 	fdf = param;
+	reset_image(fdf);
 	display_menu(fdf);
 	if (fdf->map->flat_mode == -1)
 		set_projection(fdf->map);
@@ -84,14 +85,18 @@ void	display_menu(t_fdf *fdf)
 {
 	int		x;
 	int		y;
-	char	*str;
 
-	str = ft_itoa(fdf->map->elevation);
 	x = 20;
 	y = 20;
-	mlx_put_string(fdf->mlx, "WELCOME TO MY FDF", x, y);
-	mlx_put_string(fdf->mlx, str, x, y + 20);
-	free(str);
+	mlx_put_string(fdf->mlx, "USE ARROWS TO MOVE", x, y);
+	mlx_put_string(fdf->mlx, "USE W & S TO CHANGE ELEVATION", x, y + 20);
+	mlx_put_string(fdf->mlx, "USE _ & + TO ZOOM IN AND OUT", x, y + 40);
+	mlx_put_string(fdf->mlx, "USE 1 & 2 TO ROTATE", x, y + 60);
+	mlx_put_string(fdf->mlx, "USE R TO RESET", x, y + 80);
+	mlx_put_string(fdf->mlx, "USE Y FOR PARALLEL PROJECTION", x, y + 100);
+	mlx_put_string(fdf->mlx, "USE T FOR REAL ISOMETRIC PROJECTION", x, y + 120);
+	mlx_put_string(fdf->mlx, "USE U TO ACTIVATE 2D PROJECTION", x, y + 140);
+	mlx_put_string(fdf->mlx, "USE T TO DEACTIVATE 2D PROJECTION", x, y + 160);
 }
 
 int	init_window(t_map *env)

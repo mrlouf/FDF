@@ -77,10 +77,10 @@ typedef struct s_map
 	int			offset_y;
 	int			map_colour;
 	int			flat_mode;
-	float		interval;
-	float		elevation;
-	float		alpha;
-	float		beta;
+	double		interval;
+	double		elevation;
+	double		alpha;
+	double		beta;
 	float		zoom;
 	char		**grid2d;
 	t_point		**grid3d;

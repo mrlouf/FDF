@@ -41,7 +41,12 @@ int	main(int ac, char **av)
 		check_input(av[1], &env);
 		set_matrix(&env);
 		free_array((void **)env.grid2d);
-		init_window(&env);
+		if (!init_window(&env))
+		{
+				free_fgrid(&env);
+				free_matrix(&env);
+				return (EXIT_FAILURE);
+		}
 		free_fgrid(&env);
 		free_matrix(&env);
 	}

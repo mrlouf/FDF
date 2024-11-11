@@ -34,7 +34,6 @@ void	ft_hook(void *param)
 		fdf->map->offset_x -= 5;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_RIGHT))
 		fdf->map->offset_x += 5;
-	reset_image(fdf);
 }
 
 void	ft_hook_rotations(void *param)
@@ -50,16 +49,15 @@ void	ft_hook_rotations(void *param)
 		fdf->map->alpha += 0.02;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_2))
 		fdf->map->alpha -= 0.02;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_T))
-		fdf->map->alpha = 0.78;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_R))
+		fdf->map->alpha = 0.78;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_Y))
 		fdf->map->alpha = 1.57;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_P))
-		fdf->map->flat_mode = 1;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_O))
-		fdf->map->flat_mode = -1;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_I))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_T))
 		fdf->map->alpha = 0.866;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_U))
-		fdf->map->alpha = 0.78;
+		fdf->map->flat_mode = 1;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_I))
+		fdf->map->flat_mode = -1;
+
 }
