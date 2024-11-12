@@ -21,8 +21,7 @@ void	ft_hook(void *param)
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(fdf->mlx);
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_W))
-		if (fdf->map->elevation <= 5)
-			fdf->map->elevation += 0.05;
+		fdf->map->elevation += 0.05;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_S))
 		if (fdf->map->elevation >= 0.05)
 			fdf->map->elevation -= 0.05;
@@ -42,17 +41,14 @@ void	ft_hook_rotations(void *param)
 
 	fdf = param;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_EQUAL))
-		if (fdf->map->zoom <= 1.25)
-			fdf->map->zoom += 0.025;
+		fdf->map->zoom += 0.075;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_MINUS))
-		if (fdf->map->zoom >= 0.75)
-			fdf->map->zoom -= 0.025;
+		if (fdf->map->zoom >= 0)
+			fdf->map->zoom -= 0.075;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_1))
-		if (fdf->map->alpha <= 1.55)
-			fdf->map->alpha += 0.02;
+		fdf->map->alpha += 0.02;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_2))
-		if (fdf->map->alpha >= 0.02)
-			fdf->map->alpha -= 0.02;
+		fdf->map->alpha -= 0.02;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_R))
 		fdf->map->alpha = 0.78;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_Y))
@@ -63,5 +59,4 @@ void	ft_hook_rotations(void *param)
 		fdf->map->flat_mode = 1;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_I))
 		fdf->map->flat_mode = -1;
-
 }

@@ -32,12 +32,12 @@ void	drawing_algo(t_fdf *fdf, t_fpoint start, t_fpoint end)
 	i = 0;
 	while (i++ <= delta.step)
 	{
-		if ((uint32_t)delta.x + fdf->map->offset_x < fdf->img->width
-			&& (uint32_t)delta.y + fdf->map->offset_y < fdf->img->height)
-		{
+		if (delta.x + fdf->map->offset_x > 0 \
+			&& delta.x + fdf->map->offset_x < WINDOW_WIDTH \
+			&& delta.y + fdf->map->offset_y > 0 \
+			&& delta.y + fdf->map->offset_y < WINDOW_HEIGHT)
 			mlx_put_pixel(fdf->img, delta.x + fdf->map->offset_x,
 				delta.y + fdf->map->offset_y, start.colour);
-		}
 		delta.x += delta.dx;
 		delta.y += delta.dy;
 	}
@@ -65,7 +65,6 @@ void	draw_image(void *param)
 
 	fdf = param;
 	reset_image(fdf);
-	display_menu(fdf);
 	if (fdf->map->flat_mode == -1)
 		set_projection(fdf->map);
 	else
@@ -81,6 +80,7 @@ void	draw_image(void *param)
 	}
 }
 
+/*
 void	display_menu(t_fdf *fdf)
 {
 	int		x;
@@ -97,17 +97,19 @@ void	display_menu(t_fdf *fdf)
 	mlx_put_string(fdf->mlx, "USE T FOR REAL ISOMETRIC PROJECTION", x, y + 120);
 	mlx_put_string(fdf->mlx, "USE U TO ACTIVATE 2D PROJECTION", x, y + 140);
 	mlx_put_string(fdf->mlx, "USE T TO DEACTIVATE 2D PROJECTION", x, y + 160);
-}
+}*/
 
 int	init_window(t_map *env)
 {
 	t_fdf		fdf;
 
+	fdf.map = env;
 	fdf.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "FDF@nponchon", true);
 	fdf.img = mlx_new_image(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!fdf.mlx || !fdf.img)
 		return (EXIT_FAILURE);
-	fdf.map = env;
+	set_projection(fdf.map);
+	draw_image(&fdf);
 	mlx_image_to_window(fdf.mlx, fdf.img, 0, 0);
 	mlx_loop_hook(fdf.mlx, ft_hook_rotations, &fdf);
 	mlx_loop_hook(fdf.mlx, ft_hook, &fdf);

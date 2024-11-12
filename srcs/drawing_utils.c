@@ -18,7 +18,7 @@ void	set_pointcolour(t_map *env, int i, int j)
 	float	percentage;
 
 	percentage = 0;
-	if (!env->map_colour)
+	if (env->map_colour == -1)
 	{
 		percentage = get_percentage(env->max, env->min, env->grid3d[i][j].z);
 		env->fgrid[i][j].colour = set_colour(percentage);

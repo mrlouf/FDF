@@ -8,8 +8,6 @@ INCS		:=	includes
 
 LIBFTDIR	:=	libft
 
-URLMLX		:=	https://github.com/42-Madrid-Fundacion-Telefonica/MLX42.git
-
 MLXDIR		:= 	MLX42
 
 # -=-=-=-=-    FILES -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
@@ -38,7 +36,7 @@ LIBS		:=	$(LIBFTDIR)/libft.a $(MLXDIR)/build/libmlx42.a /usr/lib/x86_64-linux-gn
 
 CC			:=	-cc
 
-CFLAGS		:=	-Werror -Wextra -Wall -g -fsanitize=address#-lglfw
+CFLAGS		:=	-Werror -Wextra -Wall -Wunreachable-code -Ofast -g#-lglfw
 
 INCLUDE		:=	-Iincludes
 
@@ -47,7 +45,7 @@ INCLUDE		:=	-Iincludes
 all: make_libft libmlx $(NAME)
 
 libmlx:
-	@cmake $(MLXDIR) -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4
+	@cmake -DDEBUG=1 $(MLXDIR) -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4
 
 %.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) $(INCLUDE) $(LIBS) -c $< -o $@

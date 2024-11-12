@@ -47,12 +47,13 @@ void	get_columns(t_map *env, int i)
 		point = &(env->grid3d[i][j]);
 		point->x = j;
 		point->y = i;
-		point->colour = 0x000000FF;
+		point->colour = 0x00bca1FF;
 		point->z = ft_atoi(line_tab[j]);
 		if (ft_strchr(line_tab[j], ',') != NULL)
 		{
 			env->map_colour = 1;
-			env->grid3d[i][j].colour = ft_atoi_base(ft_strchr(line_tab[j], ',') + 3, 16);
+			env->grid3d[i][j].colour = \
+				ft_atoi_base(ft_strchr(line_tab[j], ',') + 3, 16);
 		}
 	}
 	free_array((void **)line_tab);
